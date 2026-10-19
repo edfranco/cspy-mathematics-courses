@@ -15,6 +15,18 @@ template, the style rules and the next steps.
   course project that is the curriculum's Build.
 - Every chapter follows the template in HANDOFF.md section 4. Do not restructure it.
 
+## Learner workspace
+
+The repo is also where the owner works through the books.
+
+- `python/courseNN_slug/chNN.py`: the owner's solutions to the programming exercises, generated
+  as stubs by `tools/scaffold.py`. Tests live in the same file as `test_cN_k` functions; run
+  `python -m pytest`. Do not fill in solutions unless asked; the owner is learning by writing them.
+- `handwritten/course-NN-slug/chNN/`: scans of hand work. `handwritten/mistake-log.md` and
+  `progress.md` are the owner's records; edit only when asked.
+- After writing a new course's LaTeX, run `python tools/scaffold.py course-NN-slug` and add the
+  course's chapters to `progress.md`. The scaffold never overwrites existing files.
+
 ## Hard rules
 
 - Never use em dashes (the long dash) anywhere, in prose or in LaTeX source. Use commas,

@@ -1,0 +1,16 @@
+[project]
+name = "cs-math-workspace"
+version = "0.1.0"
+description = "Programming exercises for the CS-based mathematics curriculum"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+plot = ["matplotlib"]
+
+[tool.pytest.ini_options]
+testpaths = ["python"]
+pythonpath = ["python"]
+python_files = ["ch*.py", "test_*.py"]
+addopts = "-rs"

@@ -55,6 +55,10 @@ cs-math-curriculum/
   course-01-algebra-1/    main.tex ch01..ch11.tex exit.tex answers.tex
   course-02-geometry/     same layout
   pdf/                    built PDFs
+  python/                 learner's programming exercises (stubs from tools/scaffold.py)
+  handwritten/            learner's scanned hand work, mistake log
+  progress.md             learner's chapter tracker
+  tools/scaffold.py       generates python/ and handwritten/ from the chapter LaTeX
 ```
 
 Build: `./build.sh` or `./build.sh course-02-geometry`. Needs TeX Live with `latexmk` and
