@@ -127,7 +127,7 @@ vector), `\abs{x}`, `\degs` (degree sign, use as `90\degs`), `\proj`.
 
 - **No em dashes, ever.** Not in prose, captions, comments or code strings. The owner's style
   does not use them. Use a comma, colon, semicolon or two sentences. Check with
-  `grep -rnP '(*UTF8)\x{2014}|---' course-*/` before committing (there should be no hits; `--` en dashes
+  `grep -rn $'\xe2\x80\x94' course-*/ ; grep -rn -- '---' course-*/` before committing (there should be no hits; `--` en dashes
   are also avoided in favor of "to", as in "pages 3 to 7").
 - Lead sentences carry the point. Short sentences, under about 25 words. No filler, no "note
   that", no "it is important to".
