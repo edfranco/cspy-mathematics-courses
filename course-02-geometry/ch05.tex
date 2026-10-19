@@ -1,0 +1,79 @@
+\chapter{Transformations}
+
+\chapterintro{A transformation is a function from points to points, and the four you meet here, translate, reflect, rotate and dilate, are the entire vocabulary of CSS transforms, canvas contexts and sprite movement. The two ideas that matter most are that composition is function composition and that its order matters.}
+
+\section{Core Ideas}
+
+\paragraph{Translations} Slide every point by the same vector: $(x, y) \mapsto (x + a, y + b)$. Distances and angles are preserved.
+
+\paragraph{Reflections} Across the $x$-axis: $(x, y) \mapsto (x, -y)$. Across the $y$-axis: $(x, y) \mapsto (-x, y)$. Across the line $y = x$: $(x, y) \mapsto (y, x)$. A reflection preserves distances but reverses orientation: a clockwise triangle becomes counterclockwise.
+
+\paragraph{Rotations about the origin} Counterclockwise by $90\degs$: $(x, y) \mapsto (-y, x)$. By $180\degs$: $(x, y) \mapsto (-x, -y)$. By $270\degs$ counterclockwise, which is $90\degs$ clockwise: $(x, y) \mapsto (y, -x)$. Rotation by any angle $\theta$ is $(x\cos\theta - y\sin\theta,\ x\sin\theta + y\cos\theta)$; Chapters 8 and 9 supply the sine and cosine.
+
+\paragraph{Isometries} Translations, reflections and rotations preserve every distance and angle, so the image is congruent to the original. A dilation by factor $k$ about the origin, $(x, y) \mapsto (kx, ky)$, scales distances by $\abs{k}$ and produces a similar figure, not a congruent one.
+
+\paragraph{Composition and order} Applying $f$ then $g$ gives the function $g \circ f$, read right to left. Rotating then translating is not the same as translating then rotating. CSS reads \lstinline!transform: translate(...) rotate(...)! the same way: the rightmost transform is applied to the element first.
+
+\paragraph{Rotating about any point} To rotate about a center $C$, translate so $C$ is at the origin, rotate, then translate back. Every ``transform-origin'' is this three-step composition.
+
+\paragraph{Symmetry} A figure has line symmetry when a reflection maps it onto itself, and rotational symmetry of order $n$ when a rotation by $360\degs/n$ does.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.75,every node/.style={font=\small}]
+\draw[hairline] (-4.8,0) -- (5.8,0); \draw[hairline] (0,-1.8) -- (0,5.2);
+\draw[navy,thick,fill=navy!8] (1,1) -- (4,1) -- (1,3) -- cycle;
+\draw[navy!60,thick,dashed,fill=navy!4] (-1,1) -- (-1,4) -- (-3,1) -- cycle;
+\node[text=slate] at (2.5,-0.9) {original};
+\node[text=slate] at (-2.2,-0.9) {rotated $90\degs$};
+\node[text=navy,below right] at (1,0.95) {$(1,1)$}; \node[text=navy,right] at (4,1) {$(4,1)$}; \node[text=navy,above right] at (1,3) {$(1,3)$};
+\node[text=navy,above left] at (-1,4) {$(-1,4)$}; \node[text=navy,below left] at (-3,0.95) {$(-3,1)$}; \node[text=navy,below left] at (-1,0.95) {$(-1,1)$};
+\end{tikzpicture}
+\caption{The triangle $(1,1)$, $(4,1)$, $(1,3)$ and its image under a $90\degs$ counterclockwise rotation about the origin, $(x, y) \mapsto (-y, x)$.}
+\label{fig:rotation}
+\end{figure}
+
+\section{Worked Examples}
+
+\begin{example}
+Translate the triangle $(1, 1)$, $(4, 1)$, $(1, 3)$ by $(-2, 3)$.
+\solution Add $-2$ to each $x$ and $3$ to each $y$: $(-1, 4)$, $(2, 4)$, $(-1, 6)$.
+\end{example}
+
+\begin{example}
+Rotate $(3, -2)$ about the origin by $90\degs$ counterclockwise and by $180\degs$.
+\solution $90\degs$: $(x, y) \mapsto (-y, x)$ gives $(2, 3)$. $180\degs$: $(-3, 2)$.
+\end{example}
+
+\begin{example}
+Reflect $(2, 5)$ across the $y$-axis, then translate by $(1, -1)$. Then do the two steps in the other order.
+\solution Reflect first: $(-2, 5)$, then translate: $(-1, 4)$. Translate first: $(3, 4)$, then reflect: $(-3, 4)$. The results differ, so order matters.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Translate $(-3, 7)$ by $(5, -2)$.
+\item Reflect $(4, -1)$ across the $x$-axis, the $y$-axis, and the line $y = x$.
+\item Rotate $(-2, 5)$ about the origin by $90\degs$ counterclockwise, by $180\degs$, and by $90\degs$ clockwise.
+\item Dilate $(6, -3)$ by $k = \tfrac{1}{3}$ about the origin. What scale factor maps $(2, 3)$ to $(5, 7.5)$?
+\item Describe the transformation $(x, y) \mapsto (x - 4, y + 1)$ in words, then apply it to the square $(0, 0)$, $(2, 0)$, $(2, 2)$, $(0, 2)$.
+\item Rotate $(4, 2)$ by $90\degs$ counterclockwise about the point $(1, 1)$.
+\item Apply to $(3, 1)$: reflect across the $x$-axis, then rotate $90\degs$ counterclockwise. Then reverse the order. Are the results the same?
+\item Which of translation, rotation, reflection and dilation (with $k \ne \pm 1$) are isometries? Which reverse orientation?
+\item What is the order of rotational symmetry of a regular hexagon, and the smallest angle of rotation that maps it to itself? How many lines of symmetry does a non-square rectangle have?
+\item In CSS, where does a point at the element's origin end up under \lstinline!translate(50px, 0) rotate(90deg)! versus \lstinline!rotate(90deg) translate(50px, 0)!? Use screen coordinates, where a positive rotation turns clockwise.
+\item \textbf{(proof)} Show that reflecting across $y = 0$ and then across $y = 3$ is a translation, and find it. State the general rule for two reflections across parallel lines a distance $d$ apart.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!translate(p, dx, dy)!, \lstinline!reflect_x(p)!, \lstinline!reflect_y(p)! and \lstinline!reflect_diag(p)!, then \lstinline!rotate90(p, times)! and finally \lstinline!dilate(p, k)!, all on coordinate tuples. Test with Exercises~5.1 to 5.4.
+\item Write \lstinline!compose(*fns)! that returns a function applying the given functions right to left. Reproduce Exercise~5.7 and show the two compositions disagree.
+\item Write \lstinline!rotate90_about(p, center, times)! by composing translate, rotate and translate back. Test with Exercise~5.6.
+\item Represent each transformation as a $3 \times 3$ matrix on homogeneous coordinates $(x, y, 1)$, stored as nested lists. Write \lstinline!apply(m, p)! and \lstinline!multiply(a, b)!, and verify that multiplying matrices gives the same result as composing the functions from C5.2 on 100 random points.
+\item Draw a polygon and its images under a sequence of transforms (matplotlib, SVG or canvas), with the original in a different color, and confirm visually that rotating by $90\degs$ four times returns the original exactly.
+\end{codeexercises}

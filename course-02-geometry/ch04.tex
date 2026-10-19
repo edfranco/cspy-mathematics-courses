@@ -1,0 +1,70 @@
+\chapter{Coordinate Geometry}
+
+\chapterintro{Everything on a screen is a pair of numbers, so every geometric question becomes arithmetic on coordinates: how far apart, what is in between, is it inside. This chapter also handles the one convention that trips up every programmer, a $y$-axis that points down.}
+
+\section{Core Ideas}
+
+\paragraph{Distance and midpoint} The distance between two points is the hypotenuse of the right triangle with legs $\abs{x_2 - x_1}$ and $\abs{y_2 - y_1}$; the midpoint averages the coordinates.
+
+\begin{keybox}{Distance and midpoint}
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}, \qquad M = \left(\frac{x_1 + x_2}{2},\ \frac{y_1 + y_2}{2}\right)
+\]
+\end{keybox}
+
+\paragraph{Slope again} Slope, parallel ($m_1 = m_2$) and perpendicular ($m_1 m_2 = -1$) carry over from Course~1 and are the tools for proving a quadrilateral is a parallelogram or a rectangle from its vertices.
+
+\paragraph{Circles} A circle with center $(h, k)$ and radius $r$ is the set of points at distance $r$ from the center: $(x - h)^2 + (y - k)^2 = r^2$. A point is inside, on, or outside according to whether its squared distance from the center is less than, equal to, or greater than $r^2$. No square root is needed for the test.
+
+\paragraph{Completing the square} The expanded form $x^2 + y^2 + ax + by + c = 0$ is converted back to center-radius form by completing the square in $x$ and in $y$, exactly as in Course~1, Chapter~9.
+
+\paragraph{Screen coordinates} Math coordinates put the origin at the center with $y$ increasing upward. Screens put the origin at the top-left with $y$ increasing downward. For a canvas of width $w$ and height $h$, a math point $(x, y)$ lands at screen $(w/2 + x,\ h/2 - y)$. Forgetting the sign flip mirrors every rotation.
+
+\paragraph{Coordinate proofs} Place the figure so the algebra is easy (a vertex at the origin, a side on an axis, lengths $2a$ and $2b$ so midpoints are integers), then prove the claim with the distance, midpoint and slope formulas.
+
+\paragraph{Hit testing} A point is inside an axis-aligned rectangle when both coordinates lie within its bounds; inside a circle when the squared distance test passes. These two checks are the broad phase of every collision system.
+
+\section{Worked Examples}
+
+\begin{example}
+Find the distance and midpoint between $(-3, 4)$ and $(5, -2)$.
+\solution $d = \sqrt{8^2 + (-6)^2} = \sqrt{100} = 10$. $M = \left(\frac{-3 + 5}{2}, \frac{4 + (-2)}{2}\right) = (1, 1)$.
+\end{example}
+
+\begin{example}
+Write the equation of the circle with center $(2, -1)$ and radius 5. Is $(5, 3)$ on it?
+\solution $(x - 2)^2 + (y + 1)^2 = 25$. For $(5, 3)$: $3^2 + 4^2 = 25$, so yes, it lies on the circle.
+\end{example}
+
+\begin{example}
+Prove that the midpoint of the hypotenuse of a right triangle is equidistant from all three vertices.
+\solution Place the right angle at the origin with vertices $(0, 0)$, $(2a, 0)$ and $(0, 2b)$. The hypotenuse's midpoint is $(a, b)$. Its distance to each vertex: to $(0, 0)$ is $\sqrt{a^2 + b^2}$; to $(2a, 0)$ is $\sqrt{a^2 + b^2}$; to $(0, 2b)$ is $\sqrt{a^2 + b^2}$. All three are equal.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Find the distance between $(1, 2)$ and $(7, 10)$.
+\item Find the midpoint of $(-4, 6)$ and $(2, -2)$.
+\item A segment has midpoint $(3, 5)$ and one endpoint $(-1, 8)$. Find the other endpoint.
+\item Find the perimeter of the triangle with vertices $(0, 0)$, $(6, 0)$ and $(6, 8)$.
+\item Write the equation of the circle with center $(-3, 2)$ and radius 4.
+\item Find the center and radius of $x^2 + y^2 - 6x + 4y - 12 = 0$.
+\item Is $(7, 1)$ inside, on, or outside the circle with center $(3, -2)$ and radius 5?
+\item Show that $A(0, 0)$, $B(4, 0)$, $C(5, 3)$, $D(1, 3)$ form a parallelogram, once using slopes and once using the midpoints of the diagonals.
+\item A canvas is 800 by 600 with the math origin at its center. Where does the math point $(-100, 50)$ land on screen? Which math point is at screen $(650, 450)$?
+\item \textbf{(proof)} Prove that the diagonals of a rectangle are congruent, using vertices $(0, 0)$, $(a, 0)$, $(a, b)$ and $(0, b)$.
+\item A rectangle spans $x$ from 10 to 60 and $y$ from 20 to 40. Classify $(15, 25)$, $(60, 40)$ and $(70, 30)$ as inside, on the boundary, or outside.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!distance(p, q)! and \lstinline!midpoint(p, q)! on coordinate tuples. Compare \lstinline!distance! with \lstinline!math.dist! and check Exercises~4.1 to 4.3.
+\item Write \lstinline!circle_from_general(a, b, c)! that converts $x^2 + y^2 + ax + by + c = 0$ into \lstinline!(center, radius)! by completing the square in code, raising if the radius would be imaginary. Test with Exercise~4.6.
+\item Write \lstinline!point_in_circle(p, center, r)! and \lstinline!point_in_rect(p, x0, y0, x1, y1)! without square roots, each returning \lstinline!"inside"!, \lstinline!"on"! or \lstinline!"outside"!. Test with Exercises~4.7 and 4.11.
+\item Write \lstinline!to_screen(p, w, h)! and \lstinline!to_math(s, w, h)!. Assert they round-trip for 1000 random points and reproduce Exercise~4.9.
+\item Write \lstinline!is_parallelogram(a, b, c, d)! using the midpoints of the diagonals, then \lstinline!is_rectangle(a, b, c, d)! that also checks adjacent sides are perpendicular by slope product. Test with Exercise~4.8 and with the rectangle in Exercise~4.10 for $a = 4$, $b = 3$.
+\end{codeexercises}

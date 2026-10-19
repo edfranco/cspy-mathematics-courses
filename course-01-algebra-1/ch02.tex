@@ -1,0 +1,75 @@
+\chapter{Expressions and Simplification}
+
+\chapterintro{An algebraic expression is a formula with variables in it, and simplifying one is the same act as refactoring code: the result must evaluate to the same value for every input. The tools are combining like terms and the distributive property, and the mental model is the expression tree.}
+
+\section{Core Ideas}
+
+\paragraph{Terms and coefficients} An expression is a sum of terms. In $3x^2 - 5x + 7$, the terms are $3x^2$, $-5x$ and $7$; the coefficients are $3$, $-5$ and $7$ (the constant term). Like terms have the same variable raised to the same power: $3x$ and $-5x$ are like terms, $3x$ and $3x^2$ are not.
+
+\paragraph{Combining like terms} Add the coefficients, keep the variable part: $3x + 5x = 8x$, and $4x^2 - x^2 = 3x^2$. This is just the distributive property run backward: $3x + 5x = (3 + 5)x$.
+
+\paragraph{Distributive property} $a(b + c) = ab + ac$. It works with subtraction and negatives: $-(x - 4) = -x + 4$, and $2(3x - 5) = 6x - 10$. Run backward it is factoring out a common factor: $6x - 10 = 2(3x - 5)$.
+
+\paragraph{Evaluating} Replace each variable with its value, wrap negatives in parentheses, then follow the order of operations.
+
+\paragraph{Expression trees} Every expression is a tree: operators at the branches, numbers and variables at the leaves. $2 \times (x + 3)$ has $\times$ at the root with children $2$ and $(x + 3)$, as in Figure~\ref{fig:tree}. The tree makes precedence explicit, which is why parsers build one before evaluating.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=11mm,level 1/.style={sibling distance=22mm},level 2/.style={sibling distance=14mm},
+  every node/.style={circle,draw=navy!60,fill=navy!5,minimum size=7mm,inner sep=1pt,font=\small},
+  edge from parent/.style={draw=navy!60}]
+\node{$\times$}
+  child{node{$2$}}
+  child{node{$+$}
+    child{node{$x$}}
+    child{node{$3$}}};
+\end{tikzpicture}
+\caption{The expression tree for $2 \times (x + 3)$. The parentheses are not stored; the shape carries them.}
+\label{fig:tree}
+\end{figure}
+
+\paragraph{Translating words} ``5 less than twice a number'' is $2n - 5$, not $5 - 2n$. ``The quotient of $a$ and $b$'' is $a/b$. Write the variable's meaning down before writing the expression.
+
+\section{Worked Examples}
+
+\begin{example}
+Simplify $3(2x - 4) + 5x - 7$.
+\solution Distribute: $6x - 12 + 5x - 7$. Combine like terms: $11x - 19$.
+\end{example}
+
+\begin{example}
+Evaluate $2a^2 - 3ab$ at $a = -2$ and $b = 3$.
+\solution Substitute: $2(-2)^2 - 3(-2)(3) = 2(4) + 18 = 26$.
+\end{example}
+
+\begin{example}
+Simplify $-(x - 4) + 2(3 - x)$.
+\solution Distribute both: $-x + 4 + 6 - 2x$. Combine: $-3x + 10$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Simplify $4x + 7 - 2x + 3$.
+\item Simplify $5(2y - 3) - (y + 4)$.
+\item Simplify $3x^2 + 2x - x^2 + 5x - 8$.
+\item Evaluate $x^2 - 4x + 1$ at $x = -3$.
+\item Evaluate $\dfrac{a + b}{a - b}$ at $a = 5$ and $b = -1$.
+\item A rectangle has width $w$ and a length 3 more than twice its width. Write a simplified expression for its perimeter.
+\item Factor out the greatest common factor of $12x^2 + 18x$.
+\item Simplify $2(x + 3y) - 3(2x - y) + 4y$.
+\item Draw the expression tree for $(x + 2) \times (x - 5)$ and for $x + 2 \times x - 5$. Evaluate both at $x = 4$.
+\item A phone plan costs \$20 per month plus \$0.05 per text and \$0.10 per minute. Write the monthly cost for $t$ texts and $m$ minutes, then find the cost for 300 texts and 120 minutes.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Represent a polynomial in one variable as a dictionary from power to coefficient, so $3x^2 + 2x - 8$ is \lstinline!{2: 3, 1: 2, 0: -8}!. Write \lstinline!combine(terms)! that takes a list of \lstinline!(coefficient, power)! pairs and returns the combined dictionary with zero coefficients removed. Test it with Exercise~2.3.
+\item Write \lstinline!evaluate(poly, x)! for that dictionary form. Assert it agrees with your hand answer to Exercise~2.4.
+\item Build an expression tree with classes \lstinline!Num!, \lstinline!Var!, \lstinline!Add!, \lstinline!Sub! and \lstinline!Mul!, each with an \lstinline!eval(env)! method where \lstinline!env! maps variable names to values. Encode both trees from Exercise~2.9 and confirm the two values you computed by hand.
+\item Write \lstinline!to_string(poly)! that prints the dictionary form in standard order with correct signs, so \lstinline!{2: 2, 1: 7, 0: -8}! prints as \lstinline!2x^2 + 7x - 8! and \lstinline!{1: 1, 0: -1}! prints as \lstinline!x - 1!. Test every edge case you can think of: coefficient 1, coefficient $-1$, missing powers, a constant alone.
+\end{codeexercises}

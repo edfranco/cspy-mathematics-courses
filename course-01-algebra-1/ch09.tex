@@ -1,0 +1,71 @@
+\chapter{Quadratics}
+
+\chapterintro{A quadratic is the simplest curve, and solving one tells you when a thrown object lands, when two moving things collide, and where a parabola peaks. There are four solving methods, and the last one, the quadratic formula, is the other three automated.}
+
+\section{Core Ideas}
+
+\paragraph{The shape} $y = ax^2 + bx + c$ graphs as a parabola, opening up when $a > 0$ and down when $a < 0$. The $y$-intercept is $c$. The vertex (the highest or lowest point) is at $x = -b/(2a)$, and the vertical line through it is the axis of symmetry.
+
+\paragraph{Zero product property} If a product is zero, at least one factor is zero. So if $(x - 3)(x - 4) = 0$, then $x = 3$ or $x = 4$. This is why factoring solves equations: set one side to zero, factor, set each factor to zero.
+
+\paragraph{Square roots} If $x^2 = k$ with $k > 0$, then $x$ is the positive or negative square root of $k$. The same works for $(x - 4)^2 = 25$.
+
+\paragraph{Completing the square} For $x^2 + bx$, adding $(b/2)^2$ makes a perfect square $(x + b/2)^2$. Rewrite the equation that way, then take square roots. This also converts standard form to vertex form $y = a(x - h)^2 + k$, where $(h, k)$ is the vertex.
+
+\paragraph{The quadratic formula} For $ax^2 + bx + c = 0$ with $a$ nonzero, the solutions are given directly by the formula below; Exercise~9.12 asks you to derive it.
+
+\begin{keybox}{The quadratic formula}
+\[
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+\end{keybox}
+
+\paragraph{The discriminant} The quantity $b^2 - 4ac$ under the root decides how many real solutions there are: positive means two, zero means one (a repeated root), negative means none. Your solver should report this before it tries to take a square root.
+
+\paragraph{Motion} An object launched upward follows $h(t) = -16t^2 + v_0 t + h_0$ in feet (or $-4.9t^2 + v_0 t + h_0$ in meters). Its peak is at the vertex and it lands when $h = 0$.
+
+\section{Worked Examples}
+
+\begin{example}
+Solve $x^2 - 7x + 12 = 0$.
+\solution Factor: $(x - 3)(x - 4) = 0$. So $x = 3$ or $x = 4$.
+\end{example}
+
+\begin{example}
+Solve $x^2 + 6x - 7 = 0$ by completing the square.
+\solution Move the constant: $x^2 + 6x = 7$. Add $(6/2)^2 = 9$ to both sides: $x^2 + 6x + 9 = 16$. So $(x + 3)^2 = 16$, $x + 3 = \pm 4$, and $x = 1$ or $x = -7$.
+\end{example}
+
+\begin{example}
+Solve $2x^2 + 3x - 4 = 0$ by the formula.
+\solution Discriminant: $9 + 32 = 41$. $x = \dfrac{-3 \pm \sqrt{41}}{4}$, which is about $0.851$ and $-2.351$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Solve $x^2 - 9 = 0$.
+\item Solve $x^2 + 5x = 0$.
+\item Solve $x^2 - 2x - 15 = 0$ by factoring.
+\item Solve $(x - 4)^2 = 25$.
+\item Solve $x^2 + 8x + 3 = 0$ by completing the square. Leave the answer exact.
+\item Solve $3x^2 - 5x - 2 = 0$ by the quadratic formula.
+\item Find the discriminant and the number of real solutions for each: $x^2 + 4x + 5 = 0$; $4x^2 - 12x + 9 = 0$; $2x^2 - x - 3 = 0$.
+\item Find the vertex and axis of symmetry of $y = 2x^2 - 8x + 3$.
+\item Write $y = x^2 - 6x + 11$ in vertex form.
+\item A ball is thrown upward at 48 feet per second from a height of 6 feet, so $h(t) = -16t^2 + 48t + 6$. When is it highest, how high does it get, and when does it hit the ground (to two decimals)?
+\item A rectangle has a perimeter of 40. Write its area as a function of its width, then find the dimensions that make the area largest.
+\item \textbf{(proof)} Starting from $ax^2 + bx + c = 0$ with $a$ nonzero, derive the quadratic formula by completing the square. Every step must be justified in a sentence.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!solve_quadratic(a, b, c)! returning \lstinline!(count, roots)! where \lstinline!count! is 0, 1 or 2 and \lstinline!roots! is a sorted list. If $a$ is zero, delegate to \lstinline!solve_linear! from Chapter~3. Test with Exercises~9.1 through 9.7.
+\item Run C9.1 on $a = 1$, $b = -100{,}000{,}000$, $c = 1$. One root is wrong. Implement the stable version: compute $q = -\bigl(b + \operatorname{sign}(b)\sqrt{D}\bigr)/2$, then $x_1 = q/a$ and $x_2 = c/q$. Compare both versions and explain the term ``catastrophic cancellation'' in a comment.
+\item Write \lstinline!vertex(a, b, c)! and plot $y = 2x^2 - 8x + 3$ with its vertex marked. Confirm Exercise~9.8.
+\item Simulate Exercise~9.10 in steps of $0.01$ seconds, advancing the height with the formula each step, and report the first time the height is at or below zero. Compare with the exact answer from the formula.
+\item A sprite moves along $x(t) = 2t^2 + 3t$ and a wall stands at $x = 50$. Use C9.1 to find the collision time, then confirm it by stepping the simulation.
+\end{codeexercises}

@@ -1,0 +1,86 @@
+\chapter{Vectors in Two Dimensions}
+
+\chapterintro{A vector is a displacement, a velocity, a force, or a direction, all stored as the same pair of numbers. Adding them moves things, normalizing them keeps speeds honest, and the dot product answers the questions a game asks most: how far apart, how aligned, and is it in front of me.}
+
+\section{Core Ideas}
+
+\paragraph{Vectors and components} A vector $\mathbf{v} = \vv{x, y}$ has magnitude and direction but no position. The vector from point $A$ to point $B$ is $B - A$, component by component. A point's position vector is the vector from the origin to it.
+
+\paragraph{Addition and scaling} $\vv{a, b} + \vv{c, d} = \vv{a + c, b + d}$, pictured tip to tail. $k\vv{a, b} = \vv{ka, kb}$ scales the length by $\abs{k}$ and reverses direction when $k < 0$. Subtraction $\mathbf{u} - \mathbf{v}$ is the vector from the tip of $\mathbf{v}$ to the tip of $\mathbf{u}$. Position plus velocity times time is this arithmetic.
+
+\paragraph{Magnitude and unit vectors} $\abs{\vv{x, y}} = \sqrt{x^2 + y^2}$ by Chapter~3. The unit vector in the direction of $\mathbf{v}$ is $\mathbf{v}/\abs{\mathbf{v}}$, which has length 1; multiplying it by a speed gives a velocity with that exact speed. The zero vector has no direction and cannot be normalized. The direction angle is $\operatorname{atan2}(y, x)$.
+
+\paragraph{The dot product} Defined by components and equal to a product of lengths and the cosine of the angle between the vectors. Its sign says whether the angle is acute (positive), right (zero) or obtuse (negative), with no trigonometry needed.
+
+\begin{keybox}{Dot product}
+\[
+\mathbf{a} \cdot \mathbf{b} = a_x b_x + a_y b_y = \abs{\mathbf{a}}\,\abs{\mathbf{b}}\cos\theta, \qquad
+\cos\theta = \frac{\mathbf{a} \cdot \mathbf{b}}{\abs{\mathbf{a}}\,\abs{\mathbf{b}}}
+\]
+\end{keybox}
+
+\paragraph{Projection} The projection of $\mathbf{a}$ onto $\mathbf{b}$ is the part of $\mathbf{a}$ that points along $\mathbf{b}$: $\proj_{\mathbf{b}}\mathbf{a} = \dfrac{\mathbf{a} \cdot \mathbf{b}}{\abs{\mathbf{b}}^2}\,\mathbf{b}$ (Figure~\ref{fig:proj}). Its length, the scalar projection, is $\mathbf{a} \cdot \mathbf{b} / \abs{\mathbf{b}}$. Sliding along a wall keeps only the projection of the velocity onto the wall.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,every node/.style={font=\small}]
+\draw[hairline] (0,0) -- (5.6,0);
+\draw[navy,thick,->] (0,0) -- (5,0) node[below,text=navy] {$\mathbf{b}$};
+\draw[navy,thick,->] (0,0) -- (3,2.2) node[above,text=navy] {$\mathbf{a}$};
+\draw[navy!60,dashed] (3,2.2) -- (3,0);
+\draw[navy!60,very thick,->] (0,-0.25) -- (3,-0.25) node[midway,below,text=slate] {$\proj_{\mathbf{b}}\mathbf{a}$};
+\draw[navy!60] (2.75,0) -- (2.75,0.25) -- (3,0.25);
+\end{tikzpicture}
+\caption{The projection of $\mathbf{a}$ onto $\mathbf{b}$ is the shadow $\mathbf{a}$ casts on the line of $\mathbf{b}$.}
+\label{fig:proj}
+\end{figure}
+
+\paragraph{Perpendicular vectors} In two dimensions, $\vv{-y, x}$ is perpendicular to $\vv{x, y}$ and has the same length; it is the counterclockwise $90\degs$ rotation from Chapter~5. The dot product of perpendicular vectors is zero.
+
+\paragraph{Reflection} A velocity $\mathbf{v}$ bouncing off a surface with unit normal $\mathbf{n}$ becomes $\mathbf{v} - 2(\mathbf{v} \cdot \mathbf{n})\mathbf{n}$: the component along the normal is reversed and the rest is kept.
+
+\section{Worked Examples}
+
+\begin{example}
+Let $\mathbf{a} = \vv{3, -1}$ and $\mathbf{b} = \vv{-2, 4}$. Find $\mathbf{a} + \mathbf{b}$, $2\mathbf{a} - \mathbf{b}$ and $\abs{\mathbf{a}}$.
+\solution $\mathbf{a} + \mathbf{b} = \vv{1, 3}$. $2\mathbf{a} - \mathbf{b} = \vv{6, -2} - \vv{-2, 4} = \vv{8, -6}$. $\abs{\mathbf{a}} = \sqrt{9 + 1} = \sqrt{10}$.
+\end{example}
+
+\begin{example}
+Find the angle between $\vv{1, 2}$ and $\vv{3, 1}$.
+\solution The dot product is $3 + 2 = 5$. The lengths are $\sqrt{5}$ and $\sqrt{10}$, so $\cos\theta = 5/\sqrt{50} = 1/\sqrt{2}$ and $\theta = 45\degs$.
+\end{example}
+
+\begin{example}
+Project $\vv{3, 4}$ onto $\vv{1, 1}$.
+\solution The dot product is $7$ and $\abs{\vv{1, 1}}^2 = 2$, so the projection is $\tfrac{7}{2}\vv{1, 1} = \vv{3.5, 3.5}$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item For $\mathbf{u} = \vv{2, -3}$ and $\mathbf{v} = \vv{-1, 5}$, find $\mathbf{u} + \mathbf{v}$, $\mathbf{u} - \mathbf{v}$, $3\mathbf{u}$ and $\abs{\mathbf{u}}$.
+\item Find the displacement vector from $P(1, 4)$ to $Q(-2, 8)$, its magnitude, and the unit vector in its direction.
+\item Find the unit vector in the direction of $\vv{6, 8}$, and the vector of length $15$ in that direction.
+\item Compute $\vv{3, 4} \cdot \vv{4, -3}$, $\vv{1, 2} \cdot \vv{2, 1}$ and $\vv{-1, 2} \cdot \vv{3, 1}$, and state what each sign says about the angle.
+\item Find the angle between $\vv{1, 0}$ and $\vv{1, \sqrt{3}}$.
+\item Find the angle between $\vv{2, 2}$ and $\vv{-1, 1}$.
+\item Project $\vv{5, 3}$ onto $\vv{2, 0}$ and give the scalar projection. Then project $\vv{2, 6}$ onto $\vv{1, 1}$.
+\item Give a vector perpendicular to $\vv{3, 7}$ and verify it with the dot product.
+\item Find the direction angle of $\vv{-4, -4}$.
+\item A character at $(10, 2)$ faces direction $\vv{1, 0}$ and an enemy stands at $(14, 5)$. Find the vector to the enemy, its dot product with the facing direction, and the angle between them. Is the enemy inside a view cone of half-angle $45\degs$?
+\item A ball with velocity $\vv{3, -4}$ hits a horizontal floor with unit normal $\vv{0, 1}$. Find its velocity after the bounce.
+\item \textbf{(proof)} Using components, prove that $\mathbf{a} \cdot (\mathbf{b} + \mathbf{c}) = \mathbf{a} \cdot \mathbf{b} + \mathbf{a} \cdot \mathbf{c}$, and that $\vv{-y, x}$ is perpendicular to $\vv{x, y}$ with the same length.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!add!, \lstinline!sub!, \lstinline!scale!, \lstinline!magnitude!, \lstinline!normalize! (raising on the zero vector) and \lstinline!dot! on coordinate tuples. Test with Exercises~10.1 to 10.4.
+\item Write \lstinline!angle_between(a, b)! in degrees using \lstinline!math.acos!, clamping the cosine to $[-1, 1]$ first. Test with Exercises~10.5 and 10.6, then explain in a comment why the clamp is needed when \lstinline!a! and \lstinline!b! are parallel.
+\item Write \lstinline!project(a, b)! and \lstinline!perp(v)!. Test with Exercises~10.7 and 10.8, and assert that \lstinline!dot(perp(v), v)! is zero for 100 random vectors.
+\item Write \lstinline!in_view_cone(pos, facing, target, half_angle_deg)!. Test with Exercise~10.10, then move the target around a circle of radius 5 about the character and print which angles are visible.
+\item Write \lstinline!reflect(v, n)! and simulate a ball inside a box for 500 steps, bouncing off all four walls. Assert that the speed never changes, and explain which of the chapter's facts guarantees that.
+\end{codeexercises}

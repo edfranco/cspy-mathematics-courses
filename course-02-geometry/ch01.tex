@@ -1,0 +1,67 @@
+\chapter{Logic and Proof}
+
+\chapterintro{Geometry is the first place you meet formal proof: a chain of statements, each justified by a definition, a postulate or an earlier result. The same chain is what a correct program is, and the vocabulary here, hypothesis, conclusion, contrapositive, counterexample, is the vocabulary of preconditions, postconditions and failing tests.}
+
+\section{Core Ideas}
+
+\paragraph{Conditionals} ``If $P$, then $Q$'' has hypothesis $P$ and conclusion $Q$, written $P \Rightarrow Q$. It claims nothing about cases where $P$ is false. A function contract is a conditional: if the precondition holds, then the postcondition holds.
+
+\paragraph{Converse, inverse, contrapositive} From $P \Rightarrow Q$: the converse is $Q \Rightarrow P$, the inverse is $\lnot P \Rightarrow \lnot Q$, and the contrapositive is $\lnot Q \Rightarrow \lnot P$. A statement and its contrapositive are logically equivalent (both true or both false). The converse and inverse are equivalent to each other, but not to the original. Confusing a statement with its converse is the single most common error in reasoning.
+
+\paragraph{Biconditionals and definitions} ``$P$ if and only if $Q$'' means both $P \Rightarrow Q$ and $Q \Rightarrow P$. Every definition is a biconditional: a right angle is an angle that measures $90\degs$, and any angle that measures $90\degs$ is a right angle.
+
+\paragraph{Deductive reasoning} Postulates (axioms) are accepted without proof. Theorems are proved from postulates, definitions and earlier theorems. A proof applies rules to given facts until the conclusion appears; it never appeals to a picture looking right.
+
+\paragraph{Proof formats} A two-column proof lists statements on the left and the reason for each on the right. A paragraph proof is the same chain in prose. Common reasons: definition of midpoint, segment addition postulate ($AB + BC = AC$ when $B$ is between $A$ and $C$), angle addition postulate, substitution, and the reflexive, symmetric and transitive properties of equality.
+
+\paragraph{Counterexamples} A universal claim is disproved by one case where the hypothesis holds and the conclusion fails. One failing test disproves ``this function is correct'' the same way; no number of passing tests proves it.
+
+\section{Worked Examples}
+
+\begin{example}
+Write the converse, inverse and contrapositive of ``If a shape is a square, then it has four right angles,'' and say which are true.
+\solution Converse: if a shape has four right angles, then it is a square (false; a non-square rectangle is a counterexample). Inverse: if a shape is not a square, then it does not have four right angles (false, same counterexample). Contrapositive: if a shape does not have four right angles, then it is not a square (true, like the original).
+\end{example}
+
+\begin{example}
+Given that $M$ is the midpoint of $\overline{AB}$ and $AB = 10$, prove $AM = 5$.
+\solution
+\begin{enumerate}[label=\arabic*.,leftmargin=2em]
+\item $M$ is the midpoint of $\overline{AB}$. (Given)
+\item $AM = MB$. (Definition of midpoint)
+\item $AM + MB = AB$. (Segment addition postulate)
+\item $AM + AM = 10$. (Substitution, using steps 2 and 3 and $AB = 10$)
+\item $2\,AM = 10$, so $AM = 5$. (Combine like terms, then divide both sides by 2)
+\end{enumerate}
+\end{example}
+
+\begin{example}
+Disprove: ``If $x^2 = 9$, then $x = 3$.''
+\solution $x = -3$ satisfies the hypothesis ($(-3)^2 = 9$) but not the conclusion. One counterexample is enough.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Identify the hypothesis and conclusion: ``If two angles are complementary, then their measures add to $90\degs$.''
+\item Write the converse, inverse and contrapositive of ``If two angles are vertical angles, then they are congruent.'' Which of the four statements are true?
+\item Give a counterexample to ``If a number is divisible by 2, then it is divisible by 4.''
+\item Points $A$, $B$, $C$, $D$ lie on a line in that order, and $AB = CD$. Prove $AC = BD$.
+\item $\angle 1$ and $\angle 2$ are supplementary, and $\angle 2$ and $\angle 3$ are supplementary. Prove $\angle 1 \cong \angle 3$.
+\item Rewrite the definition of a right angle as a biconditional, then as two separate conditionals.
+\item Is ``If $x > 5$, then $x > 3$'' true? Is its converse true? Give a counterexample if not.
+\item State the contrapositive of ``If a triangle has two congruent angles, then it is isosceles,'' and explain why proving the contrapositive would prove the original.
+\item A function has precondition $n \ge 0$ and postcondition ``returns $n!$.'' Write the contract as a conditional and its contrapositive. What does the contrapositive say about a call that returned the wrong value?
+\item Given ``All squares are rectangles'' and ``$ABCD$ is a square,'' what can you conclude? Given instead ``$ABCD$ is a rectangle,'' can you conclude it is a square? Name the error in reasoning that would.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!implies(p, q)! returning the truth value of $p \Rightarrow q$ (false only when $p$ is true and $q$ is false). Print a truth table over all four combinations for the statement, its converse, inverse and contrapositive, and confirm which columns match.
+\item Write \lstinline!find_counterexample(hypothesis, conclusion, candidates)! that returns the first candidate where the hypothesis holds and the conclusion fails, or \lstinline!None!. Use it on Exercise~1.3 with lambdas over the integers 1 to 100.
+\item Write \lstinline!factorial(n)! that asserts its precondition and, in a wrapper, asserts the postcondition $n! = n \cdot (n-1)!$ for $n \ge 1$. Show that a call violating the precondition fails at the assertion rather than returning a wrong value.
+\item Represent a two-column proof as a list of \lstinline!(statement, reason, depends_on)! tuples, where \lstinline!depends_on! lists earlier line numbers. Write \lstinline!check_proof(lines, allowed_reasons)! that rejects any reason not in the allowed set and any dependency on a later line. Encode the proof in Example~1.2.
+\end{codeexercises}

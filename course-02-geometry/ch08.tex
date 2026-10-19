@@ -1,0 +1,103 @@
+\chapter{Right-Triangle Trigonometry}
+
+\chapterintro{Trigonometry starts as three ratios in a right triangle, and those three ratios are how an angle and a distance become an $x$ and a $y$. Every sprite that moves at a heading, every camera that tilts, and every shadow that falls uses nothing more than this chapter.}
+
+\section{Core Ideas}
+
+\paragraph{The three ratios} For an acute angle $\theta$ in a right triangle, name the sides relative to $\theta$: the opposite leg, the adjacent leg, and the hypotenuse (Figure~\ref{fig:soh}). The mnemonic SOH CAH TOA records the definitions.
+
+\begin{keybox}{Sine, cosine and tangent}
+\[
+\sin\theta = \frac{\text{opposite}}{\text{hypotenuse}}, \qquad
+\cos\theta = \frac{\text{adjacent}}{\text{hypotenuse}}, \qquad
+\tan\theta = \frac{\text{opposite}}{\text{adjacent}} = \frac{\sin\theta}{\cos\theta}
+\]
+\end{keybox}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8,every node/.style={font=\small}]
+\draw[navy,thick] (0,0) -- (5,0) -- (5,2.8) -- cycle;
+\draw[navy!60] (4.65,0) -- (4.65,0.35) -- (5,0.35);
+\draw[navy!60] (1,0) arc (0:29:1);
+\node[text=navy] at (1.35,0.25) {$\theta$};
+\node[text=slate,below] at (2.5,0) {adjacent};
+\node[text=slate,right] at (5,1.4) {opposite};
+\node[text=slate,above left] at (2.4,1.5) {hypotenuse};
+\end{tikzpicture}
+\caption{The sides of a right triangle named relative to the angle $\theta$.}
+\label{fig:soh}
+\end{figure}
+
+\paragraph{Why the ratios are well defined} Two right triangles with the same acute angle are similar (AA), so their side ratios agree. The sine of $30\degs$ is $\tfrac{1}{2}$ in every right triangle that contains a $30\degs$ angle, whatever its size.
+
+\paragraph{Exact values} The special triangles from Chapter~3 give exact values for $30\degs$, $45\degs$ and $60\degs$.
+
+\begin{keybox}{Exact values}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c c c c}
+\toprule
+$\theta$ & $\sin\theta$ & $\cos\theta$ & $\tan\theta$ \\
+\midrule
+$30\degs$ & $\tfrac{1}{2}$ & $\tfrac{\sqrt{3}}{2}$ & $\tfrac{\sqrt{3}}{3}$ \\
+$45\degs$ & $\tfrac{\sqrt{2}}{2}$ & $\tfrac{\sqrt{2}}{2}$ & $1$ \\
+$60\degs$ & $\tfrac{\sqrt{3}}{2}$ & $\tfrac{1}{2}$ & $\sqrt{3}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{keybox}
+
+\paragraph{Inverse functions} $\arcsin$, $\arccos$ and $\arctan$ (also written $\sin^{-1}$ and so on) recover an angle from a ratio. In code, \lstinline!math.asin! and friends return radians; multiply by $180/\pi$ or use \lstinline!math.degrees! until Chapter~9 makes radians native.
+
+\paragraph{Solving a right triangle} Given any two of the five quantities (two legs, hypotenuse, two acute angles) other than the two angles alone, the rest follow from the ratios, the Pythagorean theorem and the fact that the acute angles sum to $90\degs$. Angle of elevation is measured up from the horizontal, angle of depression down.
+
+\paragraph{Pythagorean identity} Dividing $a^2 + b^2 = c^2$ by $c^2$ gives $\sin^2\theta + \cos^2\theta = 1$ for every angle, the first trigonometric identity and the reason a direction vector built from $(\cos\theta, \sin\theta)$ always has length 1.
+
+\paragraph{Headings in code} A move of distance $d$ at angle $\theta$ from the positive $x$-axis changes position by $(d\cos\theta, d\sin\theta)$. The reverse, angle from $(dx, dy)$, needs \lstinline!math.atan2(dy, dx)!, not \lstinline!atan(dy/dx)!: the two-argument version knows the quadrant and never divides by zero.
+
+\section{Worked Examples}
+
+\begin{example}
+A right triangle has opposite side $5$ and adjacent side $12$ relative to $\theta$. Find the three ratios.
+\solution The hypotenuse is $\sqrt{25 + 144} = 13$. So $\sin\theta = \tfrac{5}{13}$, $\cos\theta = \tfrac{12}{13}$ and $\tan\theta = \tfrac{5}{12}$.
+\end{example}
+
+\begin{example}
+The hypotenuse is $20$ and one acute angle is $35\degs$. Find the side opposite that angle.
+\solution $\sin 35\degs = x/20$, so $x = 20\sin 35\degs \approx 20(0.5736) = 11.47$.
+\end{example}
+
+\begin{example}
+The legs are $7$ (opposite) and $4$ (adjacent). Find the angle.
+\solution $\tan\theta = 7/4 = 1.75$, so $\theta = \arctan 1.75 \approx 60.26\degs$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item A right triangle has legs $8$ and $15$. Find the sine, cosine and tangent of the angle opposite the side of length $8$.
+\item Give exact values: $\sin 30\degs$, $\cos 45\degs$, $\tan 60\degs$.
+\item The hypotenuse is $10$ and one angle is $25\degs$. Find the opposite and adjacent sides to two decimals.
+\item The adjacent side is $9$ and the angle is $50\degs$. Find the opposite side and the hypotenuse.
+\item The opposite side is $6$ and the hypotenuse is $10$. Find the angle to two decimals.
+\item A 20-foot ladder makes a $65\degs$ angle with the ground. How high up the wall does it reach, and how far is its base from the wall?
+\item From $150$ m away, the angle of elevation to the top of a building is $32\degs$. How tall is the building?
+\item A sprite moves $12$ units at $30\degs$ above the positive $x$-axis. Find the change in $x$ and in $y$, exactly and to two decimals.
+\item The vector from $(0, 0)$ to $(-4, 3)$ has $\arctan(3/(-4)) \approx -36.87\degs$, but that is the wrong direction. Explain why and give the correct angle.
+\item Verify $\sin^2\theta + \cos^2\theta = 1$ for the angle opposite the side of length $8$ in an $8$-$15$-$17$ triangle.
+\item Solve the right triangle with hypotenuse $13$ and one leg $5$: find the other leg and both acute angles.
+\item \textbf{(proof)} Explain why $\sin\theta$ depends only on $\theta$ and not on the size of the right triangle that contains it.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!sin_deg(t)!, \lstinline!cos_deg(t)! and \lstinline!tan_deg(t)! that take degrees, and test them against the exact values in Exercise~8.2 with \lstinline!math.isclose!.
+\item Write \lstinline!solve_right_triangle(**known)! that accepts any two of \lstinline!a!, \lstinline!b!, \lstinline!c!, \lstinline!A!, \lstinline!B! (legs, hypotenuse, angles opposite them in degrees), refuses the two angles alone, and returns all five. Test with Exercises~8.3, 8.4 and 8.11.
+\item Write \lstinline!polar_to_cartesian(d, deg)! and \lstinline!cartesian_to_polar(dx, dy)! using \lstinline!math.atan2!. Assert they round-trip for points in all four quadrants, and reproduce Exercise~8.9 to show where \lstinline!math.atan! goes wrong.
+\item Write \lstinline!height_from_elevation(distance, deg)! for an angle of elevation, and then the function \lstinline!distance_from_depression(height, deg)! for an angle of depression. Verify Exercise~8.7.
+\item Build the table of $\sin$ and $\cos$ for $0\degs$, $30\degs$, $45\degs$, $60\degs$ and $90\degs$ using only \lstinline!math.sqrt! and the special-triangle ratios, no \lstinline!math.sin!, then compare each entry with \lstinline!math.sin! and \lstinline!math.cos!.
+\end{codeexercises}

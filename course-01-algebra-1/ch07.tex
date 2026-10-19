@@ -1,0 +1,71 @@
+\chapter{Exponents and Exponential Growth}
+
+\chapterintro{Exponents are repeated multiplication, and the difference between adding a constant each step and multiplying by one is the difference between a loop that finishes and one that does not. This chapter also covers powers of 2, which is how memory, bits and the growth of algorithms are measured.}
+
+\section{Core Ideas}
+
+\paragraph{The exponent rules} For nonzero $a$ and $b$ and integers $m$ and $n$, the six rules below follow directly from exponents being repeated multiplication.
+
+\begin{keybox}{Rules of exponents}
+\[
+a^m a^n = a^{m+n} \qquad \frac{a^m}{a^n} = a^{m-n} \qquad (a^m)^n = a^{mn}
+\]
+\[
+(ab)^n = a^n b^n \qquad a^0 = 1 \qquad a^{-n} = \frac{1}{a^n}
+\]
+\end{keybox}
+
+\paragraph{Scientific notation} A number written as $c \times 10^n$ with $1 \le c < 10$. In code it is \lstinline!6.02e23!. Multiply the leading numbers and add the exponents, then renormalize.
+
+\paragraph{Exponential growth and decay} A quantity that grows by a fixed percentage $r$ each period follows $y = a(1 + r)^t$, where $a$ is the starting amount. Decay is $y = a(1 - r)^t$. Doubling every period is $y = a \cdot 2^t$.
+
+\paragraph{Powers of 2} $2^{10} = 1024$, which is why a kilobyte is ``about a thousand'' bytes. $2^{20}$ is about a million, $2^{30}$ about a billion, $2^{32} = 4{,}294{,}967{,}296$ (the number of values in a 32-bit integer), and $2^{64}$ is about $1.8 \times 10^{19}$.
+
+\paragraph{Binary} Each binary digit is a power of 2: $101101$ means $32 + 8 + 4 + 1 = 45$. To represent $n$ distinct values you need the smallest $k$ with $2^k \ge n$ bits.
+
+\paragraph{Linear versus exponential} Adding a fixed amount each step gives a line; multiplying by a fixed factor gives a curve that eventually outruns any line. An algorithm that takes $2^n$ steps is unusable past $n$ of about 40, however fast the machine.
+
+\section{Worked Examples}
+
+\begin{example}
+Simplify $(2x^3 y)^2 \cdot x^{-4}$.
+\solution Square each factor: $4x^6 y^2$. Multiply by $x^{-4}$: $4x^2 y^2$.
+\end{example}
+
+\begin{example}
+\$1000 grows at 5\% per year for 3 years. What is it worth?
+\solution $1000 \times 1.05^3 = 1000 \times 1.157625 = \$1157.63$.
+\end{example}
+
+\begin{example}
+Convert $101101$ (binary) to decimal.
+\solution Place values from the right are $1, 2, 4, 8, 16, 32$. The ones are at 32, 8, 4 and 1, so the value is $45$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Simplify $x^5 \cdot x^{-2} \cdot x$.
+\item Simplify $(3a^2 b^{-1})^3$ with positive exponents only.
+\item Simplify $\dfrac{12x^7}{4x^9}$.
+\item Evaluate $2^{-3} \cdot 4^2$.
+\item Write $0.00042$ and $3{,}500{,}000$ in scientific notation, then multiply them and give the product in scientific notation.
+\item A culture of 500 bacteria doubles every 3 hours. How many are there after 24 hours?
+\item A \$2000 laptop loses 20\% of its value each year. What is it worth after 4 years?
+\item Write $2^{10}$, $2^{16}$ and $2^{32}$ in decimal and state the nearest power of 10 for each.
+\item How many bits are needed to represent 1000 distinct values? 70{,}000 distinct values?
+\item Convert $10011$ (binary) to decimal, and $77$ (decimal) to binary.
+\item One algorithm takes $n$ steps and another takes $2^n$ steps. Compute both for $n = 10$, $20$ and $30$. What is the smallest $n$ for which $2^n$ exceeds one million?
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!power(base, n)! for any integer $n$, negative included, with a simple loop. Then write \lstinline!fast_power(base, n)! using squaring (if $n$ is even, square the result for $n/2$; if odd, multiply by the base once more). Count the multiplications each version makes for $n = 1000$.
+\item Write \lstinline!bits_needed(n)! that returns the smallest $k$ with $2^k \ge n$. Verify it against \lstinline!(n - 1).bit_length()! for every $n$ from 2 to 100{,}000 and explain in a comment why that expression works.
+\item Write \lstinline!to_binary(n)! by repeated division by 2 and \lstinline!from_binary(s)! by place values, without \lstinline!bin()! or \lstinline!int(s, 2)!. Assert they round-trip for every $n$ from 0 to 5000, and check Exercise~7.10.
+\item Starting from \$1000, print a year-by-year table of a linear account that adds \$50 per year and an exponential account that grows 5\% per year. Find the first year the exponential account is ahead, and the first year it is ahead by more than \$1000.
+\item Compute \lstinline!2**53 + 1! as an integer and as a float. Show that the float version equals \lstinline!2**53!, and explain the result in one sentence using the 53-bit precision of a double.
+\end{codeexercises}

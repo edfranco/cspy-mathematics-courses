@@ -1,0 +1,69 @@
+\chapter{Circles}
+
+\chapterintro{Circles are how you draw anything round, lay items out radially, and test whether a ray hits a target. This chapter covers arcs and sectors, the angle theorems that make inscribed shapes predictable, and the algebra that finds where a line meets a circle.}
+
+\section{Core Ideas}
+
+\paragraph{Parts of a circle} The radius $r$ runs from the center to the circle; the diameter is $2r$. A chord joins two points on the circle; a secant is a line through two points; a tangent touches at exactly one point. Circumference is $2\pi r$ and area is $\pi r^2$.
+
+\paragraph{Arcs and sectors} A central angle has its vertex at the center, and the arc it cuts off has the same measure in degrees. A central angle of $\theta$ degrees cuts off a fraction $\theta/360$ of the whole circle, which gives the arc length and the sector area.
+
+\begin{keybox}{Arc length and sector area (degrees)}
+\[
+s = \frac{\theta}{360} \cdot 2\pi r, \qquad A_{\text{sector}} = \frac{\theta}{360} \cdot \pi r^2
+\]
+\end{keybox}
+
+\paragraph{Inscribed angles} An inscribed angle has its vertex on the circle. It measures half the arc it intercepts, so it is half the central angle on the same arc. Any angle inscribed in a semicircle is a right angle, which is a quick way to construct one.
+
+\paragraph{Tangents and chords} A tangent is perpendicular to the radius at the point of tangency, so a tangent segment, the radius, and the segment from the center to the external point form a right triangle. The two tangent segments from an external point are equal. A radius perpendicular to a chord bisects it.
+
+\paragraph{Circle and line intersection} Substitute the line's equation into the circle's and solve the resulting quadratic. Two real solutions mean the line is a secant, one means it is tangent, none means it misses. The discriminant from Course~1 decides it before you solve.
+
+\paragraph{Circles in code} Drawing APIs take a center, a radius and start and end angles, almost always in radians. A radial menu places $n$ items at angles $360\degs/n$ apart. A ray-circle test is the intersection above with the extra condition that the hit lies ahead of the ray's origin.
+
+\section{Worked Examples}
+
+\begin{example}
+A circle has radius $10$. Find the arc length and sector area for a central angle of $72\degs$.
+\solution The fraction is $72/360 = 1/5$. Arc length: $\tfrac{1}{5}(20\pi) = 4\pi \approx 12.57$. Sector area: $\tfrac{1}{5}(100\pi) = 20\pi \approx 62.83$.
+\end{example}
+
+\begin{example}
+An inscribed angle intercepts an arc of $100\degs$. Find the angle.
+\solution Half the arc: $50\degs$. A central angle on the same arc would be $100\degs$.
+\end{example}
+
+\begin{example}
+Where does the line $y = x + 1$ meet the circle $x^2 + y^2 = 25$?
+\solution Substitute: $x^2 + (x + 1)^2 = 25$, so $2x^2 + 2x - 24 = 0$, or $x^2 + x - 12 = 0$, which factors as $(x + 4)(x - 3) = 0$. The points are $(3, 4)$ and $(-4, -3)$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Find the circumference and area of a circle with radius $7$, exactly and to two decimals.
+\item A circle has diameter $12$. Find the arc length and sector area for a central angle of $60\degs$.
+\item An arc of length $5\pi$ lies on a circle of radius $10$. Find its central angle.
+\item An inscribed angle intercepts an arc of $140\degs$. Find the inscribed angle and the central angle on the same arc.
+\item A triangle is inscribed in a circle with one side as a diameter of length $13$. One other side is $5$. Find the third side and explain why you can.
+\item A tangent segment from an external point $P$ has length $8$ and the radius is $6$. How far is $P$ from the center?
+\item A chord of length $16$ lies in a circle of radius $10$. How far is the chord from the center?
+\item Classify each line against the circle $x^2 + y^2 = 25$ as secant, tangent or miss, and give any intersection points: $y = 7$; $y = 5$; $y = 3$.
+\item Find where the line $x + y = 7$ meets the circle $x^2 + y^2 = 25$.
+\item Eight menu items are spaced equally on a circle of radius $120$ pixels. What is the angle between neighbors, and what is the arc length between adjacent item centers?
+\item A wheel of radius $0.35$ m turns $500$ times. How far does it travel, to one decimal?
+\item \textbf{(proof)} Prove the inscribed angle theorem for the case where one side of the inscribed angle is a diameter, using an isosceles triangle and the exterior angle theorem.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!arc_length(r, deg)!, \lstinline!sector_area(r, deg)! and \lstinline!angle_from_arc(r, s)!. Test with Exercises~7.2 and 7.3 and assert the first and third are inverses.
+\item Write \lstinline!circle_line_intersections(center, r, p, q)! for the line through points \lstinline!p! and \lstinline!q!, returning a list of 0, 1 or 2 points. Parametrize the line as $p + t(q - p)$, substitute, and use the discriminant. Test with Exercises~7.8 and 7.9.
+\item Write \lstinline!tangent_length(d, r)! for the tangent from a point at distance \lstinline!d! from the center, and \lstinline!chord_distance(r, chord)!, each raising on impossible inputs. Test with Exercises~7.6 and 7.7.
+\item Write \lstinline!radial_positions(n, r, center)! returning the $n$ points of Exercise~7.10, using \lstinline!math.radians! for the angle. Print them for $n = 8$ and confirm the first is directly to the right of the center.
+\item Write \lstinline!ray_hits_circle(origin, direction, center, r)! that reuses C7.2 and keeps only intersections with $t \ge 0$, returning the nearest hit or \lstinline!None!. Test a ray that points away from the circle and one that starts inside it.
+\end{codeexercises}

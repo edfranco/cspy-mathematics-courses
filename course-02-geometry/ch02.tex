@@ -1,0 +1,77 @@
+\chapter{Lines and Angles}
+
+\chapterintro{Angles are the first quantities geometry measures, and the relationships between them, around a point, along a line, and across a pair of parallel lines, are the first theorems you prove. A layout engine, a ray cast through parallel lanes, and an angle normalized to one turn all run on exactly these facts.}
+
+\section{Core Ideas}
+
+\paragraph{Vocabulary} A segment $\overline{AB}$ has two endpoints; a ray $\overrightarrow{AB}$ has one; a line $\overleftrightarrow{AB}$ has none. An angle is formed by two rays with a common endpoint, the vertex, and is measured in degrees: acute below $90\degs$, right at $90\degs$, obtuse between $90\degs$ and $180\degs$, straight at $180\degs$.
+
+\paragraph{Angle pairs} Complementary angles sum to $90\degs$; supplementary angles sum to $180\degs$. Adjacent angles share a vertex and a side. A linear pair is two adjacent angles whose outer sides form a line; they are supplementary. Vertical angles are the opposite angles formed by two crossing lines; they are congruent.
+
+\paragraph{Parallel lines and a transversal} When a transversal crosses two parallel lines (Figure~\ref{fig:transversal}), corresponding angles are congruent ($\angle 1 \cong \angle 5$), alternate interior angles are congruent ($\angle 3 \cong \angle 6$), alternate exterior angles are congruent ($\angle 1 \cong \angle 8$), and same-side interior angles are supplementary ($\angle 3 + \angle 5 = 180\degs$). The converses are how you prove two lines are parallel.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,every node/.style={font=\small}]
+\draw[navy!70,thick] (-3,1) -- (3,1) node[right,text=slate] {$\ell$};
+\draw[navy!70,thick] (-3,-1) -- (3,-1) node[right,text=slate] {$m$};
+\draw[navy,thick] (-1.8,-2.2) -- (1.8,2.2) node[above,text=slate] {$t$};
+\node at (0.95,1.38) {1}; \node at (0.05,1.38) {2};
+\node at (0.05,0.62) {3}; \node at (0.95,0.62) {4};
+\node at (-0.65,-0.62) {5}; \node at (-1.55,-0.62) {6};
+\node at (-1.55,-1.38) {7}; \node at (-0.65,-1.38) {8};
+\end{tikzpicture}
+\caption{Two parallel lines $\ell$ and $m$ cut by a transversal $t$. Angles 1, 2, 7, 8 are exterior; 3, 4, 5, 6 are interior.}
+\label{fig:transversal}
+\end{figure}
+
+\paragraph{Perpendicular lines} Two lines that meet at a right angle. In the coordinate plane their slopes multiply to $-1$, as in Course~1.
+
+\paragraph{Angles of a triangle} The three interior angles of a triangle sum to $180\degs$. The proof draws a line through one vertex parallel to the opposite side and uses alternate interior angles. An exterior angle of a triangle equals the sum of the two remote interior angles.
+
+\paragraph{Angles in code} Angles are stored as numbers and must be normalized, usually to $[0\degs, 360\degs)$, because $735\degs$ and $15\degs$ are the same direction. The same facts hold for radians, which Chapter~9 introduces.
+
+\section{Worked Examples}
+
+\begin{example}
+Two vertical angles measure $3x + 10$ and $5x - 30$. Find $x$ and the angles.
+\solution Vertical angles are congruent, so $3x + 10 = 5x - 30$, which gives $2x = 40$ and $x = 20$. Each angle measures $3(20) + 10 = 70\degs$.
+\end{example}
+
+\begin{example}
+In Figure~\ref{fig:transversal}, $\angle 3 = 115\degs$. Find all eight angles.
+\solution $\angle 2$ is vertical to $\angle 3$, so $\angle 2 = 115\degs$. $\angle 1$ and $\angle 4$ are supplementary to $\angle 3$ (linear pairs), so each is $65\degs$. By corresponding angles, $\angle 5 = \angle 1 = 65\degs$, $\angle 6 = \angle 2 = 115\degs$, $\angle 7 = \angle 3 = 115\degs$ and $\angle 8 = \angle 4 = 65\degs$.
+\end{example}
+
+\begin{example}
+The angles of a triangle measure $2x$, $3x$ and $4x$. Find them.
+\solution $2x + 3x + 4x = 180$, so $9x = 180$ and $x = 20$. The angles are $40\degs$, $60\degs$ and $80\degs$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Find the complement and the supplement of a $37\degs$ angle.
+\item Two vertical angles measure $4x - 15$ and $2x + 25$. Find $x$ and the angle measure.
+\item A linear pair measures $3x + 12$ and $2x - 7$. Find $x$ and both angles.
+\item Two parallel lines are cut by a transversal. A pair of corresponding angles measure $2x + 30$ and $4x - 10$. Find $x$ and the angle.
+\item Same-side interior angles measure $x + 40$ and $3x$. Find both angles.
+\item A triangle has angles $50\degs$, $2x$ and $3x - 20$. Find the two unknown angles.
+\item An exterior angle of a triangle measures $120\degs$ and one remote interior angle measures $45\degs$. Find the other remote interior angle.
+\item \textbf{(proof)} Prove that vertical angles are congruent. Use that each of the two angles forms a linear pair with the same third angle.
+\item Two lines are cut by a transversal. In the first case the alternate interior angles are $62\degs$ and $118\degs$; in the second they are $118\degs$ and $118\degs$. In which case are the lines parallel, and why?
+\item Normalize $735\degs$ and $-90\degs$ to the range $[0\degs, 360\degs)$.
+\item \textbf{(proof)} Prove that the interior angles of a triangle sum to $180\degs$ by drawing a line through one vertex parallel to the opposite side.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!normalize_angle(deg)! that returns the equivalent angle in $[0, 360)$ using only addition and subtraction in a loop, then a second version using \lstinline!%!. Assert they agree for every integer from $-1000$ to $1000$, and check Exercise~2.10.
+\item Write \lstinline!transversal_angles(a1)! that takes the measure of $\angle 1$ in Figure~\ref{fig:transversal} and returns a dictionary of all eight angles, assuming the lines are parallel. Check it against Example~2.2 by passing $65$.
+\item Write \lstinline!third_angle(a, b)! that returns the third angle of a triangle and raises \lstinline!ValueError! when $a + b \ge 180$ or either input is not positive. Test with Exercise~2.6.
+\item Write \lstinline!classify_pair(a, b)! returning \lstinline!"complementary"!, \lstinline!"supplementary"! or \lstinline!"neither"!, using \lstinline!math.isclose! so that $0.1 + 89.9$ counts as complementary.
+\item Draw two parallel lines and a transversal with matplotlib, SVG or a canvas, and label the eight angles with the values from C2.2. Change the transversal's slope and confirm the labels still satisfy every relationship in the Core Ideas.
+\end{codeexercises}

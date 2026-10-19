@@ -1,0 +1,87 @@
+\chapter{Triangles}
+
+\chapterintro{Every mesh a graphics card draws is made of triangles, every distance on a screen is a hypotenuse, and every collision test begins with a triangle inequality. This chapter gives you the facts that make triangles rigid, the tests that make two of them congruent or similar, and the theorem that turns right triangles into distance.}
+
+\section{Core Ideas}
+
+\paragraph{Classification} By sides: scalene (no equal sides), isosceles (at least two), equilateral (all three). By angles: acute (all less than $90\degs$), right (one of $90\degs$), obtuse (one greater than $90\degs$). An equilateral triangle is equiangular, with three $60\degs$ angles.
+
+\paragraph{Triangle inequality} Three lengths form a triangle only if each is less than the sum of the other two: $a + b > c$, $a + c > b$, $b + c > a$. Equality gives a degenerate ``triangle'' with zero area. Validate with this before constructing anything.
+
+\paragraph{Congruence} Two triangles are congruent when corresponding sides and angles match. Four shortcuts prove it: SSS (three sides), SAS (two sides and the included angle), ASA (two angles and the included side) and AAS (two angles and a non-included side), plus HL for right triangles (hypotenuse and a leg). SSA and AAA do not prove congruence. Once triangles are congruent, every corresponding part is congruent (CPCTC).
+
+\paragraph{Isosceles triangles} The angles opposite the two equal sides are equal, and the converse holds. The altitude from the vertex angle bisects the base and the angle.
+
+\paragraph{Similarity} Triangles are similar when corresponding angles are equal and corresponding sides are proportional by one scale factor $k$. AA is enough to prove it. Perimeters scale by $k$ and areas by $k^2$. Scaling a sprite, a camera projection and a shadow are all similar triangles.
+
+\paragraph{The Pythagorean theorem} In a right triangle with legs $a$, $b$ and hypotenuse $c$, the squares of the legs sum to the square of the hypotenuse. The converse is also true, which makes it a test for right angles.
+
+\begin{keybox}{Pythagorean theorem and special right triangles}
+\[
+a^2 + b^2 = c^2
+\]
+A $45\degs$-$45\degs$-$90\degs$ triangle has sides in the ratio $1 : 1 : \sqrt{2}$. A $30\degs$-$60\degs$-$90\degs$ triangle has sides in the ratio $1 : \sqrt{3} : 2$, with the shortest side opposite the $30\degs$ angle.
+\end{keybox}
+
+\paragraph{A proof by rearrangement} Place four copies of the right triangle inside a square of side $a + b$ so that their hypotenuses form a tilted inner square of side $c$ (Figure~\ref{fig:pythag}). The big square's area is $(a + b)^2 = a^2 + 2ab + b^2$; it is also $c^2$ plus four triangles of area $\tfrac{1}{2}ab$, which is $c^2 + 2ab$. Subtracting $2ab$ from both gives the theorem.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.55,every node/.style={font=\small}]
+\draw[navy!70,thick] (0,0) rectangle (7,7);
+\draw[navy,thick,fill=navy!6] (3,0) -- (7,3) -- (4,7) -- (0,4) -- cycle;
+\node[below,text=slate] at (1.5,0) {$a$}; \node[below,text=slate] at (5,0) {$b$};
+\node[left,text=slate] at (0,2) {$b$}; \node[left,text=slate] at (0,5.5) {$a$};
+\node at (3.5,3.5) {$c^2$};
+\node[text=slate] at (5.3,1.1) {$c$};
+\end{tikzpicture}
+\caption{Four congruent right triangles inside a square of side $a + b$ leave a square of side $c$.}
+\label{fig:pythag}
+\end{figure}
+
+\section{Worked Examples}
+
+\begin{example}
+Can $4$, $7$ and $12$ be the sides of a triangle?
+\solution $4 + 7 = 11$, which is not greater than $12$, so no. The two short sides cannot reach each other.
+\end{example}
+
+\begin{example}
+A right triangle has legs $9$ and $12$. Find the hypotenuse. Another has hypotenuse $13$ and one leg $5$. Find the other leg.
+\solution $c = \sqrt{81 + 144} = \sqrt{225} = 15$. For the second, $b = \sqrt{169 - 25} = \sqrt{144} = 12$.
+\end{example}
+
+\begin{example}
+A $3$-$4$-$5$ triangle is enlarged so that its shortest side is $9$. Find the other sides and the ratio of the areas.
+\solution The scale factor is $9/3 = 3$, so the sides are $9$, $12$ and $15$. The area ratio is $3^2 = 9$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Classify by sides and by angles: (a) sides $5, 5, 5$; (b) angles $90\degs, 45\degs, 45\degs$; (c) sides $7, 8, 12$ with all angles acute.
+\item Which can be the sides of a triangle: (a) $3, 4, 8$; (b) $5, 5, 9$; (c) $2, 2, 4$?
+\item Two sides of a triangle are $7$ and $10$. Write the range of possible lengths for the third side.
+\item A right triangle has legs $8$ and $15$. Find the hypotenuse.
+\item A right triangle has hypotenuse $25$ and one leg $7$. Find the other leg.
+\item Is a triangle with sides $9, 40, 41$ a right triangle? Is one with sides $7, 9, 12$? If not, is it acute or obtuse?
+\item A $45\degs$-$45\degs$-$90\degs$ triangle has legs of $6$; find the hypotenuse. A $30\degs$-$60\degs$-$90\degs$ triangle has shortest side $5$; find the other two sides.
+\item An isosceles triangle has a vertex angle of $40\degs$. Find the base angles.
+\item $\triangle ABC \sim \triangle DEF$ with $AB = 6$, $DE = 9$ and $BC = 8$. Find $EF$ and the ratio of the perimeters.
+\item Which congruence shortcut applies, if any: (a) three pairs of congruent sides; (b) two angles and the included side; (c) two sides and a non-included angle?
+\item A 13-foot ladder reaches a window 12 feet above the ground. How far is the base of the ladder from the wall?
+\item \textbf{(proof)} Prove the Pythagorean theorem using Figure~\ref{fig:pythag}, justifying why the inner figure is a square.
+\item A 1920 by 1080 pixel screen has what diagonal length in pixels, to one decimal?
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!is_triangle(a, b, c)! using the triangle inequality, and \lstinline!triangle_type(a, b, c)! returning a pair such as \lstinline!("isosceles", "obtuse")!, where the angle type comes from comparing $c^2$ with $a^2 + b^2$ for the longest side $c$. Test with Exercises~3.1, 3.2 and 3.6.
+\item Write \lstinline!hypotenuse(a, b)! and \lstinline!leg(c, a)!, raising \lstinline!ValueError! when a leg would not be shorter than the hypotenuse. Compare \lstinline!hypotenuse! with \lstinline!math.hypot! on 1000 random inputs.
+\item Write \lstinline!pythagorean_triples(limit)! that returns every $(a, b, c)$ with $a < b < c \le$ \lstinline!limit! and $a^2 + b^2 = c^2$, by brute force. List the triples with $c \le 50$ and check that $(9, 40, 41)$ appears.
+\item Write \lstinline!similarity_scale(t1, t2)! that takes two side-length triples and returns the scale factor if the triangles are similar (sort each, then check the three ratios are equal within tolerance) or \lstinline!None!. Test with Example~3.3.
+\item Two circles with centers $(x_1, y_1)$, $(x_2, y_2)$ and radii $r_1$, $r_2$ overlap when the distance between centers is at most $r_1 + r_2$. Write \lstinline!circles_overlap(...)! that decides this without calling \lstinline!sqrt!, by comparing squared quantities, and explain in a comment why that is both valid and faster.
+\end{codeexercises}

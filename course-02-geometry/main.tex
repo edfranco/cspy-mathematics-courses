@@ -1,0 +1,182 @@
+\documentclass[11pt,letterpaper,openany]{book}
+
+% ---------- fonts and text ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\ttdefault}{txtt}
+\linespread{1.06}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+
+% ---------- page ----------
+\usepackage[left=1.15in,right=1.15in,top=1.05in,bottom=1.05in,headheight=15pt]{geometry}
+\raggedbottom
+\setlength{\emergencystretch}{2.5em}
+\setlength{\columnsep}{24pt}
+
+% ---------- colour ----------
+\usepackage{xcolor}
+\definecolor{navy}{RGB}{24,52,96}
+\definecolor{slate}{RGB}{96,106,124}
+\definecolor{hairline}{RGB}{196,201,210}
+
+% ---------- packages ----------
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{booktabs,tabularx,array}
+\usepackage{float}
+\usepackage{pifont}
+\usepackage{tikz}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,columns=fullflexible,keepspaces=true,showstringspaces=false}
+\usepackage[hidelinks,bookmarksnumbered,pdftitle={Geometry and Introductory Trigonometry: A Programmer's Introduction},pdfauthor={CS-Based Mathematics Curriculum}]{hyperref}
+
+% ---------- headings ----------
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {\color{slate}\large\scshape Chapter \thechapter}
+  {8pt}
+  {\color{navy}\fontsize{27}{31}\selectfont\bfseries}
+  [\vspace{8pt}{\color{navy}\titlerule[1.1pt]}]
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont}
+  {}
+  {0pt}
+  {\color{navy}\fontsize{27}{31}\selectfont\bfseries}
+  [\vspace{8pt}{\color{navy}\titlerule[1.1pt]}]
+\titlespacing*{\chapter}{0pt}{10pt}{34pt}
+\titleformat{\section}{\normalfont\Large\bfseries\color{navy}}{\thesection}{0.8em}{}
+\titlespacing*{\section}{0pt}{3.4ex plus 1ex minus .2ex}{1.4ex plus .2ex}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{navy}}{\thesubsection}{0.8em}{}
+\titleformat{\paragraph}[runin]{\normalfont\bfseries\color{navy}}{}{0pt}{}[.]
+\titlespacing*{\paragraph}{0pt}{1.6ex plus .6ex minus .2ex}{0.55em}
+
+% ---------- running heads ----------
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\renewcommand{\headrule}{{\color{hairline}\hrule width\headwidth height\headrulewidth}}
+\fancypagestyle{body}{\fancyhf{}
+  \fancyhead[LE]{\small\thepage\qquad\textcolor{slate}{\leftmark}}
+  \fancyhead[RO]{\small\textcolor{slate}{\rightmark}\qquad\thepage}
+  \renewcommand{\headrulewidth}{0.3pt}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- boxes ----------
+\newtcolorbox{keybox}[1]{enhanced,breakable,sharp corners,
+  colback=navy!5,colframe=navy!65,boxrule=0.5pt,
+  title={#1},fonttitle=\bfseries\small,colbacktitle=navy!88!black,coltitle=white,
+  left=10pt,right=10pt,top=7pt,bottom=7pt,before skip=12pt,after skip=14pt}
+\newtcolorbox{examplebox}{enhanced,breakable,frame hidden,sharp corners,colback=white,
+  borderline west={2.5pt}{0pt}{navy!55},left=10pt,right=2pt,top=3pt,bottom=3pt,
+  before skip=10pt,after skip=10pt}
+\newcounter{example}[chapter]
+\renewcommand{\theexample}{\thechapter.\arabic{example}}
+\newenvironment{example}{\refstepcounter{example}\begin{examplebox}\noindent\textcolor{navy}{\textbf{\textsc{Example~\theexample}}}\quad\ignorespaces}{\end{examplebox}}
+\newcommand{\solution}{\par\smallskip\noindent\textit{Solution.}\enspace\ignorespaces}
+
+% ---------- lists ----------
+\newlist{exercises}{enumerate}{1}
+\setlist[exercises]{label=\textbf{\thechapter.\arabic*},leftmargin=*,labelsep=0.6em,itemsep=5pt,parsep=0pt,topsep=4pt}
+\newlist{codeexercises}{enumerate}{1}
+\setlist[codeexercises]{label=\textbf{C\thechapter.\arabic*},leftmargin=*,labelsep=0.6em,itemsep=7pt,parsep=0pt,topsep=4pt}
+\newlist{reviewexercises}{enumerate}{1}
+\setlist[reviewexercises]{label=\textbf{E.\arabic*},leftmargin=*,labelsep=0.6em,itemsep=5pt,parsep=0pt,topsep=4pt}
+\newlist{checklist}{itemize}{1}
+\setlist[checklist]{label=\ding{111},leftmargin=*,labelsep=0.7em,itemsep=4pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt}
+
+% ---------- helpers ----------
+\newcommand{\chapterintro}[1]{\noindent{\large\itshape\color{slate}#1}\par\vspace{14pt}}
+\newcommand{\answer}[2]{\par\noindent\hangindent=2.4em\hangafter=1\textbf{#1}\enspace #2}
+\newcommand{\lerp}{\operatorname{lerp}}
+\newcommand{\clamp}{\operatorname{clamp}}
+\newcommand{\vv}[1]{\langle #1 \rangle}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\degs}{^\circ}
+\newcommand{\proj}{\operatorname{proj}}
+
+\begin{document}
+\frontmatter
+
+% ================= TITLE PAGE =================
+\begin{titlepage}
+\centering
+\vspace*{1.6in}
+{\color{slate}\scshape\large CS-Based Mathematics Curriculum\par}
+{\color{slate}\scshape\large Course 2\par}
+\vspace{0.6in}
+{\color{navy}\bfseries\fontsize{40}{46}\selectfont Geometry and\\[4pt] Introductory Trigonometry\par}
+\vspace{0.3in}
+{\color{navy}\rule{0.6\textwidth}{1.2pt}}\par
+\vspace{0.3in}
+{\Large\itshape A Programmer's Introduction\par}
+\vspace{0.25in}
+{\large With exercises to solve by hand and then in code\par}
+\vfill
+{\large Pilot Edition\par}
+{\large October 2026\par}
+\vspace{0.6in}
+\end{titlepage}
+
+% ================= FRONT MATTER =================
+\pagestyle{plain}
+
+\chapter*{Preface: How to Use This Book}
+\markboth{Preface}{}
+\addcontentsline{toc}{chapter}{Preface: How to Use This Book}
+
+Every chapter runs the same way: read the core ideas, work the examples with the solutions covered, solve the exercises by hand, and only then write the code. The programming exercises reuse the hand exercises as test cases, so an unsolved exercise leaves you with nothing to test against.
+
+Each chapter has four parts:
+
+\begin{itemize}
+\item \textbf{Core ideas}: the rules and definitions, with the computer science reason for each.
+\item \textbf{Worked examples}: cover the solution, attempt it, then compare.
+\item \textbf{Exercises}: numbered 1.1, 1.2 and so on; pencil, paper, no calculator, no code.
+\item \textbf{Programming exercises}: numbered C1.1, C1.2 and so on; Python~3, plain functions, \lstinline!assert! statements as tests.
+\end{itemize}
+
+Rules that make the book work:
+
+\begin{enumerate}
+\item Do the exercises in one sitting before opening an editor. Check them against the answer key at the back of the book, and log every miss with the rule you broke.
+\item Treat each programming exercise as a unit test of your understanding. Name the function exactly as given so later chapters can import it.
+\item Keep all code in one folder, one file per chapter (\lstinline!geo01.py!, \lstinline!geo02.py!). Chapter~11 assembles them into the course project, a 2D scene you can transform and hit-test.
+\item Use only the standard library. \lstinline!math!, \lstinline!fractions! and \lstinline!random! are allowed; NumPy, SymPy and game-engine vector classes are not, because the point is to write what they do. Drawing may use matplotlib, an HTML canvas or SVG.
+\item An exercise marked \textbf{(proof)} is answered in full sentences, not symbols alone.
+\end{enumerate}
+
+The book covers the ten topics of Course~2 in the curriculum, in the same order, and ends with the course project and an exit review. It assumes Course~1: linear equations, systems, quadratics and functions are used without comment. Plan on about one chapter per week, with the last two weeks for the project.
+
+\cleardoublepage
+\tableofcontents
+
+% ================= MAIN MATTER =================
+\mainmatter
+\pagestyle{body}
+
+\input{ch01}
+\input{ch02}
+\input{ch03}
+\input{ch04}
+\input{ch05}
+\input{ch06}
+\input{ch07}
+\input{ch08}
+\input{ch09}
+\input{ch10}
+\input{ch11}
+
+% ================= BACK MATTER =================
+\backmatter
+\pagestyle{body}
+\input{exit}
+\input{answers}
+
+\end{document}

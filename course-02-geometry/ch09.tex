@@ -1,0 +1,90 @@
+\chapter{The Unit Circle and Radians}
+
+\chapterintro{Degrees are a human convention; radians are the angle measure the mathematics prefers and every graphics, audio and physics API expects. The unit circle extends sine and cosine from acute angles to every angle, and turns an angle into a direction vector in one step.}
+
+\section{Core Ideas}
+
+\paragraph{Radians} One radian is the angle whose arc on a circle equals the radius. A full turn is $2\pi$ radians, so $180\degs = \pi$ radians.
+
+\begin{keybox}{Degrees, radians and the unit circle}
+\[
+\text{radians} = \text{degrees} \cdot \frac{\pi}{180}, \qquad
+\text{degrees} = \text{radians} \cdot \frac{180}{\pi}, \qquad
+P(\theta) = (\cos\theta,\ \sin\theta)
+\]
+\end{keybox}
+
+\paragraph{The unit circle} On the circle of radius 1 centered at the origin, the point at angle $\theta$ measured counterclockwise from the positive $x$-axis is $(\cos\theta, \sin\theta)$ (Figure~\ref{fig:unitcircle}). This defines sine and cosine for every angle, not only acute ones, and $\tan\theta$ is $\sin\theta/\cos\theta$ wherever $\cos\theta \ne 0$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=2.3,every node/.style={font=\small}]
+\draw[hairline] (-1.35,0) -- (1.35,0); \draw[hairline] (0,-1.35) -- (0,1.35);
+\draw[navy!70,thick] (0,0) circle (1);
+\foreach \a/\l in {0/{$0$}, 30/{$\pi/6$}, 45/{$\pi/4$}, 60/{$\pi/3$}, 90/{$\pi/2$}, 180/{$\pi$}, 270/{$3\pi/2$}}
+  { \fill[navy] (\a:1) circle (0.022); \node[text=slate] at (\a:1.2) {\l}; }
+\draw[navy,thick] (0,0) -- (125:1);
+\fill[navy] (125:1) circle (0.022);
+\draw[navy!60,dashed] (125:1) -- ({cos(125)},0);
+\node[text=navy,above left] at (125:1.02) {$(\cos\theta, \sin\theta)$};
+\draw[navy!60] (0.28,0) arc (0:125:0.28); \node[text=navy] at (0.1,0.42) {$\theta$};
+\end{tikzpicture}
+\caption{The unit circle. Each angle $\theta$ gives the point $(\cos\theta, \sin\theta)$; the marked angles are the ones to know by heart.}
+\label{fig:unitcircle}
+\end{figure}
+
+\paragraph{Signs by quadrant} Cosine is the $x$-coordinate and sine the $y$-coordinate, so in quadrant I both are positive, in II only sine, in III neither, in IV only cosine. Tangent is positive in I and III.
+
+\paragraph{Reference angles} The reference angle is the acute angle between the terminal side and the $x$-axis. The sine and cosine of any angle equal those of its reference angle up to sign, so the table of exact values from Chapter~8 covers the whole circle.
+
+\paragraph{Periodicity and negative angles} Adding $2\pi$ (a full turn) changes nothing: $\sin(\theta + 2\pi) = \sin\theta$. Negative angles go clockwise, and $\cos(-\theta) = \cos\theta$ while $\sin(-\theta) = -\sin\theta$.
+
+\paragraph{Arc length and sector area in radians} With $\theta$ in radians the degree formulas lose their fraction: $s = r\theta$ and $A = \tfrac{1}{2}r^2\theta$. This simplification is the reason mathematics uses radians.
+
+\paragraph{Angles in code} \lstinline!math.sin!, \lstinline!Math.sin!, canvas \lstinline!arc! and every physics engine take radians. Two further operations come up constantly: wrapping an angle into $[0, 2\pi)$ or $[-\pi, \pi)$, and finding the shortest signed turn from one heading to another, which is never more than half a turn.
+
+\section{Worked Examples}
+
+\begin{example}
+Convert $150\degs$ to radians and $\pi/4$ to degrees.
+\solution $150 \cdot \pi/180 = 5\pi/6$. $\pi/4 \cdot 180/\pi = 45\degs$.
+\end{example}
+
+\begin{example}
+Find $\sin(5\pi/6)$ and $\cos(5\pi/6)$ exactly.
+\solution $5\pi/6$ is in quadrant II with reference angle $\pi/6$. So $\sin(5\pi/6) = \sin(\pi/6) = \tfrac{1}{2}$, and $\cos(5\pi/6) = -\cos(\pi/6) = -\tfrac{\sqrt{3}}{2}$.
+\end{example}
+
+\begin{example}
+A circle has radius $4$. Find the arc length for a central angle of $2.5$ radians.
+\solution $s = r\theta = 4(2.5) = 10$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Convert to radians, exactly: $30\degs$, $45\degs$, $90\degs$, $120\degs$, $270\degs$, $360\degs$.
+\item Convert to degrees: $\pi/3$, $3\pi/4$, $7\pi/6$, $5\pi/3$, and $1$ radian (to two decimals).
+\item Give the unit circle point at $\pi/3$, at $3\pi/4$, and at $\pi$.
+\item Evaluate exactly: $\sin(7\pi/6)$, $\cos(5\pi/3)$, $\tan(3\pi/4)$, $\sin(3\pi/2)$.
+\item Find the reference angle and quadrant of $4\pi/3$ and of $-\pi/4$.
+\item Find every $\theta$ in $[0, 2\pi)$ with $\cos\theta = -\tfrac{\sqrt{2}}{2}$.
+\item A circle has radius $6$. Find the arc length and sector area for a central angle of $\pi/3$.
+\item A wheel of radius $0.5$ m turns at $3$ radians per second. How fast does a point on its rim move?
+\item Normalize $7\pi/2$ to $[0, 2\pi)$, and $-\pi/3$ as well.
+\item What is the shortest signed rotation from a heading of $350\degs$ to $10\degs$? Give it in degrees and radians, and say why $-340\degs$ is the wrong answer.
+\item A point orbits on a circle of radius $100$ px centered at screen $(400, 300)$, with $y$ pointing down. At $\theta = \pi/6$ measured counterclockwise in math coordinates, what are its screen coordinates?
+\item \textbf{(proof)} Show that the degree formula $s = \frac{\theta}{360} \cdot 2\pi r$ becomes $s = r\theta$ when $\theta$ is converted to radians.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!deg_to_rad(d)! and \lstinline!rad_to_deg(r)! using only \lstinline!math.pi!, and assert they agree with \lstinline!math.radians! and \lstinline!math.degrees! for every integer degree from $-720$ to $720$.
+\item Write \lstinline!unit_circle_point(theta)!. Assert $x^2 + y^2 = 1$ within tolerance for 1000 random angles, and check Exercise~9.3 against exact values.
+\item Write \lstinline!wrap_2pi(theta)! into $[0, 2\pi)$ and \lstinline!wrap_pi(theta)! into $[-\pi, \pi)$. Test with Exercise~9.9 and with angles far outside one turn, such as $100\pi + 1$.
+\item Write \lstinline!shortest_turn(from_deg, to_deg)! returning the signed turn in $(-180, 180]$. Test with Exercise~9.10, with a turn of exactly $180\degs$, and with two equal headings.
+\item Write \lstinline!orbit_position(t, omega, r, center)! for a point orbiting at angular speed \lstinline!omega! radians per second, returning screen coordinates with $y$ down. Confirm Exercise~9.11 at the right \lstinline!t!, and print one full orbit at 12 steps to see the direction of travel.
+\end{codeexercises}

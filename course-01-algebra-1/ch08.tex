@@ -1,0 +1,70 @@
+\chapter{Polynomials and Factoring}
+
+\chapterintro{A polynomial is a sum of terms with whole-number powers, and factoring is the reverse of multiplying it out. Multiplication is mechanical; factoring is a search, which is why it makes a good first algorithm to write.}
+
+\section{Core Ideas}
+
+\paragraph{Vocabulary} The degree is the highest power. The leading coefficient is the coefficient of that term. Standard form lists terms from highest power to lowest. A monomial has one term, a binomial two, a trinomial three.
+
+\paragraph{Adding and subtracting} Combine like terms. For subtraction, distribute the minus sign across every term of the second polynomial first.
+
+\paragraph{Multiplying} Every term of the first polynomial multiplies every term of the second, then combine like terms. For two binomials this is FOIL (first, outer, inner, last). Three products are worth memorizing.
+
+\begin{keybox}{Special products}
+\[
+(a + b)^2 = a^2 + 2ab + b^2 \qquad (a - b)^2 = a^2 - 2ab + b^2 \qquad (a + b)(a - b) = a^2 - b^2
+\]
+\end{keybox}
+
+\paragraph{Factoring, in order of attempts} First pull out the greatest common factor. Then for $x^2 + bx + c$, find two numbers that multiply to $c$ and add to $b$. For $ax^2 + bx + c$, find two numbers that multiply to $ac$ and add to $b$, split the middle term, and factor by grouping. Check for a difference of squares or a perfect square trinomial. Four terms usually factor by grouping.
+
+\paragraph{Coefficient arrays} A polynomial is a list of coefficients indexed by power: $2x^3 - 6x^2 + 2x - 1$ is \lstinline![-1, 2, -6, 2]! with index 0 holding the constant. Addition is elementwise; multiplication of degree $m$ and degree $n$ gives degree $m + n$, where the coefficient at index $k$ is the sum of all products of coefficients whose indices add to $k$.
+
+\paragraph{Horner's method} Evaluate from the leading coefficient inward: $2x^3 - 6x^2 + 2x - 1 = ((2x - 6)x + 2)x - 1$. One multiplication and one addition per coefficient, with no exponentiation at all.
+
+\section{Worked Examples}
+
+\begin{example}
+Multiply $(2x - 3)(x + 5)$.
+\solution First $2x^2$, outer $10x$, inner $-3x$, last $-15$. Combined: $2x^2 + 7x - 15$.
+\end{example}
+
+\begin{example}
+Factor $x^2 - 5x - 14$.
+\solution Two numbers with product $-14$ and sum $-5$ are $-7$ and $2$. So $(x - 7)(x + 2)$.
+\end{example}
+
+\begin{example}
+Factor $6x^2 + 7x - 3$.
+\solution $ac = -18$; two numbers with product $-18$ and sum $7$ are $9$ and $-2$. Split: $6x^2 + 9x - 2x - 3$. Group: $3x(2x + 3) - 1(2x + 3) = (3x - 1)(2x + 3)$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Add $(3x^2 - 2x + 5) + (x^2 + 4x - 9)$.
+\item Subtract $(5x^3 - x + 2) - (2x^3 + 3x^2 - 4)$.
+\item Multiply $(x + 4)(x - 6)$.
+\item Expand $(3x - 2)^2$.
+\item Multiply $(2x + 5)(2x - 5)$.
+\item Multiply $(x - 1)(x^2 + x + 1)$.
+\item Factor $8x^3 - 12x^2$.
+\item Factor $x^2 + 9x + 20$.
+\item Factor $x^2 - 3x - 28$.
+\item Factor $2x^2 + 11x + 12$.
+\item Factor $49y^2 - 64$.
+\item Factor $x^3 + 2x^2 - 9x - 18$ completely.
+\item Evaluate $2x^3 - 6x^2 + 2x - 1$ at $x = 3$ with Horner's method, writing down each intermediate value.
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Using coefficient lists, write \lstinline!poly_add(p, q)!, \lstinline!poly_sub(p, q)! and \lstinline!poly_mul(p, q)!. Strip trailing zeros so the degree is honest. Test with Exercises~8.1 through 8.6.
+\item Write \lstinline!horner(coeffs, x)! and \lstinline!naive_eval(coeffs, x)! (the version that calls \lstinline!x ** k! for each term). Count the multiplications each makes for a degree-50 polynomial, treating \lstinline!x ** k! as $k - 1$ multiplications.
+\item Write \lstinline!factor_trinomial(a, b, c)! for integer coefficients. Search every pair of integer factors of $ac$ for a pair that sums to $b$, then factor by grouping, and return the two binomials as coefficient lists or \lstinline!None! if there is no integer factorization. Test with Exercises~8.8 through 8.10.
+\item Write \lstinline!poly_to_string(coeffs)! that prints standard form, so \lstinline![-24, -2, 1]! prints as \lstinline!x^2 - 2x - 24!. Reuse or improve your C2.4.
+\item For every factoring exercise in this chapter, multiply your factors back together with \lstinline!poly_mul! and assert the result equals the original. A factorization that does not survive this test is wrong, whatever the answer key says.
+\end{codeexercises}

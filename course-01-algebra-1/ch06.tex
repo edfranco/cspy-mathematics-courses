@@ -1,0 +1,60 @@
+\chapter{Inequalities}
+
+\chapterintro{An inequality describes a range rather than a single value, and ranges are what every bounds check, clamp and validation rule in your code enforces. The solving moves are the same as for equations, with one exception that catches everyone at least once.}
+
+\section{Core Ideas}
+
+\paragraph{The one new rule} Adding or subtracting on both sides keeps the direction. Multiplying or dividing both sides by a negative number reverses it: $-2x < 6$ becomes $x > -3$. Dividing by a positive number keeps the direction.
+
+\paragraph{Writing the answer} On a number line, an open circle means the endpoint is excluded ($<$ or $>$) and a closed circle means it is included ($\le$ or $\ge$). Interval notation uses a round bracket for excluded and a square bracket for included: $x \ge 2$ is $[2, \infty)$, and $2 \le x < 7$ is $[2, 7)$.
+
+\paragraph{Compound inequalities} ``And'' means both conditions hold, which is the overlap of two ranges; $-2 \le 2x - 6 < 8$ is solved on all three parts at once. ``Or'' means at least one holds, which is the union of two ranges.
+
+\paragraph{Absolute value inequalities} $|x| < a$ means $-a < x < a$ ($x$ is within $a$ of zero). $|x| > a$ means $x < -a$ or $x > a$ ($x$ is at least $a$ away from zero). Rewrite, then solve the compound inequality. If $a$ is negative, $|x| < a$ has no solution and $|x| > a$ is true for every $x$.
+
+\paragraph{Clamping} $\clamp(x, \text{lo}, \text{hi}) = \max(\text{lo}, \min(x, \text{hi}))$ returns the nearest value satisfying $\text{lo} \le x \le \text{hi}$. A range check and a clamp are the two things code does with an inequality: test it or enforce it.
+
+\section{Worked Examples}
+
+\begin{example}
+Solve $-3x + 4 > 13$.
+\solution Subtract 4: $-3x > 9$. Divide by $-3$ and flip: $x < -3$.
+\end{example}
+
+\begin{example}
+Solve $-2 \le 2x - 6 < 8$.
+\solution Add 6 everywhere: $4 \le 2x < 14$. Divide by 2: $2 \le x < 7$, or $[2, 7)$.
+\end{example}
+
+\begin{example}
+Solve $|x - 5| \le 3$.
+\solution Rewrite: $-3 \le x - 5 \le 3$. Add 5: $2 \le x \le 8$. Every $x$ within 3 of 5.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Solve $4x - 9 \ge 7$.
+\item Solve $5 - 2x < 11$.
+\item Solve $3(x + 2) \le 5x - 4$.
+\item Solve $-1 < \dfrac{x + 3}{2} \le 4$ and write the answer in interval notation.
+\item Solve $x - 2 < -6$ or $2x \ge 10$.
+\item Solve $|2x + 1| < 7$.
+\item Solve $|x - 4| \ge 2$.
+\item Solve $|3x| + 2 < 1$.
+\item Write in interval notation: (a) $x \ge -2$ and $x < 3$; (b) $x < 0$ or $x > 9$.
+\item A ride admits riders between 42 and 54 inches tall, inclusive. Write this as a compound inequality and as a single absolute value inequality.
+\item An API costs \$0.004 per call after a \$10 monthly fee, and the monthly budget is \$50. What is the largest number of calls you can make?
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!clamp(x, lo, hi)!. For 10{,}000 random floats, assert that $\text{lo} \le \clamp(x, \text{lo}, \text{hi}) \le \text{hi}$ and that clamp returns $x$ unchanged whenever $x$ was already in range.
+\item Write \lstinline!solve_inequality(a, b, op, c)! for $ax + b \mathrel{\text{op}} c$, where \lstinline!op! is one of \lstinline!"<"!, \lstinline!"<="!, \lstinline!">"!, \lstinline!">="!. Return the solution as an interval tuple \lstinline!(lo, hi, lo_closed, hi_closed)! using \lstinline!float("-inf")! and \lstinline!float("inf")! for open ends. It must flip the operator when $a$ is negative. Test with Exercises~6.1 through 6.3.
+\item Write \lstinline!contains(interval, x)! for that interval tuple. Test the two intervals from Exercise~6.9 at their endpoints and just inside and outside each.
+\item Write \lstinline!solve_abs_inequality(a, b, op, c)! for $|ax + b| \mathrel{\text{op}} c$, returning one interval, a list of two intervals, or an empty list. Test with Exercises~6.6 through 6.8.
+\item Write \lstinline!can_ride(h)! using the absolute value form from Exercise~6.10, and a second function \lstinline!can_ride_compound(h)! that uses the compound form. Assert they agree for every integer height from 30 to 60.
+\end{codeexercises}

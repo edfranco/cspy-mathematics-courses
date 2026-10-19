@@ -1,0 +1,74 @@
+\chapter{Linear Functions and Graphs}
+
+\chapterintro{A linear function changes at a constant rate, and that rate, the slope, is the whole story: it is the pixels-per-unit of a scale, the speed of a moving sprite, and the step of a linear interpolation. This chapter turns lines into functions you can graph, build from two points, and use to map one range of values onto another.}
+
+\section{Core Ideas}
+
+\paragraph{Slope} For two points $(x_1, y_1)$ and $(x_2, y_2)$, the slope is the change in $y$ over the change in $x$.
+
+\begin{keybox}{Slope of a line}
+\[
+m = \frac{y_2 - y_1}{x_2 - x_1}
+\]
+\end{keybox}
+
+\paragraph{Three forms of a line} Slope-intercept $y = mx + b$ ($b$ is the $y$-intercept). Point-slope $y - y_1 = m(x - x_1)$, the fastest way to write a line from a point and a slope. Standard $Ax + By = C$ with integer coefficients. Convert between them with the moves from Chapter~3.
+
+\paragraph{Graphing} Plot the $y$-intercept, then use the slope as rise over run to find a second point. For standard form, find both intercepts by setting $x = 0$ and then $y = 0$.
+
+\paragraph{Parallel and perpendicular} Parallel lines have equal slopes. Perpendicular lines have slopes whose product is $-1$, so the perpendicular slope is the negative reciprocal.
+
+\paragraph{Linear interpolation} The value a fraction $t$ of the way from $a$ to $b$ is $\lerp(a, b, t) = a + (b - a)t$. At $t = 0$ it is $a$, at $t = 1$ it is $b$. Mapping a value from one range to another is a line through two points.
+
+\begin{keybox}{Mapping one range onto another}
+\[
+\operatorname{map}(x) = \text{out}_{\min} + (x - \text{in}_{\min})\,\frac{\text{out}_{\max} - \text{out}_{\min}}{\text{in}_{\max} - \text{in}_{\min}}
+\]
+\end{keybox}
+
+\paragraph{Direct variation} $y = kx$ is a line through the origin; $k$ is the constant of variation and also the slope.
+
+\section{Worked Examples}
+
+\begin{example}
+Find the line through $(2, 5)$ and $(6, 13)$.
+\solution Slope: $(13 - 5)/(6 - 2) = 2$. Point-slope: $y - 5 = 2(x - 2)$. Simplified: $y = 2x + 1$.
+\end{example}
+
+\begin{example}
+Graph $3x + 2y = 12$.
+\solution Set $y = 0$: $x = 4$, so $(4, 0)$. Set $x = 0$: $y = 6$, so $(0, 6)$. Draw the line through both.
+\end{example}
+
+\begin{example}
+Compute $\lerp(10, 20, 0.25)$.
+\solution $10 + (20 - 10)(0.25) = 12.5$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Find the slope of the line through $(-1, 4)$ and $(3, -4)$.
+\item Write the equation of the line with slope $\tfrac{3}{2}$ through $(4, -1)$ in slope-intercept form.
+\item Write the equation of the line through $(0, 3)$ and $(5, 0)$.
+\item Find the $x$- and $y$-intercepts of $4x - 5y = 20$.
+\item Write $y = -2x + 7$ in standard form with integer coefficients.
+\item Write the line parallel to $y = 4x - 1$ through $(1, 1)$.
+\item Write the line perpendicular to $y = 4x - 1$ through $(1, 1)$.
+\item A chart maps a data value $v$ in the range $0$ to $100$ onto a pixel position $x$ in the range $40$ to $440$. Write $x$ as a linear function of $v$, and find the pixel for $v = 35$.
+\item Celsius to Fahrenheit is linear and passes through $(0, 32)$ and $(100, 212)$. Derive the formula from these two points.
+\item Compute $\lerp(-5, 15, 0.3)$. Then find the $t$ for which $\lerp(-5, 15, t) = 10$.
+\item A taxi charges \$3.50 plus \$2.25 per mile. Write the cost as a function of distance, find the cost of a 7.2-mile ride, and find the distance a \$30 fare buys (to one decimal).
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Write \lstinline!lerp(a, b, t)! and \lstinline!inverse_lerp(a, b, v)!, which returns the $t$ for which lerp gives $v$. Assert they round-trip for a grid of values, and check Exercise~4.10.
+\item Write \lstinline!map_range(x, in_min, in_max, out_min, out_max)! using the two functions from C4.1, and verify Exercise~4.8 with it.
+\item Write \lstinline!line_through(p1, p2)! returning \lstinline!(m, b)! for a non-vertical line, or \lstinline!("vertical", x)! when the two points share an $x$-coordinate. Test it with the points in Exercises~4.1 through 4.3 and with a vertical pair.
+\item Plot $y = \tfrac{3}{2}x - 7$ and your perpendicular line from Exercise~4.7 on the same axes with matplotlib (the one allowed exception to the standard-library rule) or an HTML canvas. Observe that they only look perpendicular when both axes use the same scale, and explain why.
+\item Write \lstinline!ease_in_quad(t)! $= t \times t$ and print a table comparing it to \lstinline!lerp(0, 100, t)! for $t$ in $0, 0.25, 0.5, 0.75, 1$. Which one is a linear function, and how can you tell from the table alone?
+\end{codeexercises}

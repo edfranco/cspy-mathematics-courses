@@ -1,0 +1,40 @@
+\chapter{Course Project}
+
+\chapterintro{The project is a small algebra engine that reads expressions as text, simplifies and evaluates them, solves linear equations, $2 \times 2$ systems and quadratics, and plots the results. Almost every piece already exists in your chapter files; this chapter assembles them behind a parser and a command line.}
+
+Build it in six stages, each with its own acceptance tests. Do not start a stage until the previous one passes. Because the engine reads and prints plain text, exponents in its input and output use the caret, as in \lstinline!3x^2 + 2x - 5!.
+
+\section{The Six Stages}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.85in} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.9in} >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Stage} & \textbf{Build} & \textbf{Reuses} & \textbf{Done when} \\
+\midrule
+1. Tokenizer & \texttt{tokenize(s)} turns \texttt{"3x\textasciicircum{}2 + 2x - 5"} into a list of tokens: numbers, the variable, operators, parentheses & Nothing new & Whitespace is ignored, \texttt{-5} and \texttt{- 5} both work, and bad characters raise an error \\
+2. Parser & \texttt{parse(tokens)} builds an expression tree honoring precedence and parentheses & C2.3 tree classes & \texttt{2 * (x + 3)} and \texttt{2 * x + 3} produce different trees, and \texttt{2\textasciicircum{}3\textasciicircum{}2} groups right to left \\
+3. Polynomial form & \texttt{to\_poly(tree)} flattens a tree with $+$, $-$, $*$ and integer powers of $x$ into a coefficient list; \texttt{to\_string} prints it & C2.1, C8.1, C8.4 & \texttt{(x + 2) * (x - 5)} prints as \texttt{x\textasciicircum{}2 - 3x - 10}, and \texttt{evaluate} agrees with the tree's own \texttt{eval} for ten random $x$ \\
+4. Linear solver & \texttt{solve("3x - 7 = 11")} parses both sides, moves everything to one side, and reports the solution, none, or all & C3.1, C3.4 & Exercises 3.1 through 3.6 all return the correct outcome, and 3.9 returns $7/3$ exactly \\
+5. System and quadratic solvers & \texttt{solve\_system("3x + 2y = 16", "2x - 5y = -2")} and \texttt{solve("x\textasciicircum{}2 - 2x - 15 = 0")} & C5.1, C9.1, C9.2 & Exercises 5.1 through 5.6 and 9.1 through 9.7 all pass, including the no-solution and infinite cases, and the discriminant is reported \\
+6. Plotter & \texttt{plot("x\textasciicircum{}2 - 2x - 15", -5, 7)} draws the curve with its roots and vertex marked & C4.4, C9.3 & A linear expression draws as a line and a quadratic as a parabola with the correct intercepts \\
+\bottomrule
+\end{tabularx}
+\caption{The six stages of the algebra engine, what each reuses, and its acceptance test.}
+\end{table}
+
+\section{Acceptance Checklist}
+
+\begin{checklist}
+\item Every exercise in Chapters 2, 3, 5, 8 and 9 that has a numeric answer is reproduced by the engine from its text form.
+\item A test file runs all of those checks with one command and prints a pass count.
+\item The parser rejects malformed input with a clear message rather than a stack trace.
+\item Arithmetic uses \lstinline!Fraction! throughout, with floats appearing only when a square root is taken.
+\item A short README explains how to run it and which chapter each module came from.
+\end{checklist}
+
+\section{Stretch Goals}
+
+Support a second variable in Stage~3 so systems parse from text. Add \lstinline!simplify! so \lstinline!2(x + 3) - x! prints as \lstinline!x + 6!. Print the step-by-step solution for a linear equation the way you would write it by hand.

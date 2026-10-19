@@ -1,0 +1,53 @@
+\chapter{Course Project}
+
+\chapterintro{The project is a 2D scene, on an HTML canvas, in SVG, or in matplotlib, where you translate, rotate and scale shapes by typing values, click to find out what you hit, intersect a line with a circle, and read the angle between two vectors. If the shapes behave wrong, the math is wrong, which is the point.}
+
+Build it in six stages, each with its own acceptance tests. Do not start a stage until the previous one passes. All geometry lives in math coordinates and is converted to screen coordinates only when drawing, using \lstinline!to_screen! from Chapter~4.
+
+\section{The Six Stages}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.85in} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.9in} >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Stage} & \textbf{Build} & \textbf{Reuses} & \textbf{Done when} \\
+\midrule
+1. Scene and axes & An 800 by 600 drawing surface with the math origin at the center and $y$ up; draw the axes and a labeled grid & C4.4 & The math point $(0, 0)$ draws at the center and $(100, 100)$ draws up and to the right \\
+2. Shapes and transforms & Shapes as vertex lists; translate, rotate (any angle) and scale from typed values, each as a $3 \times 3$ matrix, applied in the order typed & C5.1, C5.4, C9.2 & Rotating a square by $90\degs$ four times returns its vertices within $10^{-9}$, and swapping the order of a rotate and a translate visibly moves the result \\
+3. Hit testing & Click a point: report which shape contains it, using the squared-distance test for circles and a same-side test for convex polygons (the point is inside when it is on the same side of every edge) & C4.3, C6.1 & For 1000 random points and a convex polygon, the same-side test agrees with a ray-crossing test you write independently \\
+\bottomrule
+\end{tabularx}
+\caption{Stages 1 to 3 of the geometry scene, what each reuses, and its acceptance test.}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.85in} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.9in} >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Stage} & \textbf{Build} & \textbf{Reuses} & \textbf{Done when} \\
+\midrule
+4. Circle and line & Draw one circle and one segment; mark the intersection points and report their count & C7.2, C7.5 & Moving the segment reports 0, 1 or 2 points correctly, and the tangent case shows exactly one mark \\
+5. Vector readout & Two vectors from the origin, set by typing or dragging; display magnitudes, dot product, angle and the projection of one onto the other & C10.1 to C10.3 & Perpendicular vectors show $90.00\degs$, parallel vectors show $0.00\degs$ without a \texttt{NaN}, and the drawn projection lands on the line of the second vector \\
+6. Motion & Animate a shape turning from one heading to another by the shortest turn, and a point orbiting a circle, all in radians & C9.3, C9.4, C9.5 & Turning from $350\degs$ to $10\degs$ passes through $0\degs$, never through $180\degs$, and the orbit runs counterclockwise on screen when the math angle increases \\ \\
+\bottomrule
+\end{tabularx}
+\caption{Stages 4 to 6 of the geometry scene.}
+\end{table}
+
+\section{Acceptance Checklist}
+
+\begin{checklist}
+\item Every transform is a matrix, and the scene composes them by multiplication rather than by special-casing each kind.
+\item Every numeric exercise answer in Chapters 4, 5, 6, 7 and 10 that involves points or vectors can be reproduced by typing the inputs into the scene.
+\item A test file runs the agreement checks from Stages 2, 3 and 5 with one command and prints a pass count.
+\item No function in the project calls \lstinline!math.atan!; every angle recovered from coordinates uses \lstinline!math.atan2!.
+\item A short README explains how to run it and which chapter each module came from.
+\end{checklist}
+
+\section{Stretch Goals}
+
+Add a concave polygon and make the ray-crossing test the one the scene uses for it. Add a bounding-box broad phase so that hit testing skips shapes whose boxes miss the click, and show the boxes. Add a sector-shaped view cone to a shape and highlight any other shape inside it, using Exercise~C10.4.

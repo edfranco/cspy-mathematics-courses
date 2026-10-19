@@ -1,0 +1,60 @@
+\chapter{Numbers and Operations}
+
+\chapterintro{The real numbers are the values algebra works with, and the first job is knowing which kind you have and how the operations on them are ordered. Every one of these rules has a twin in your language's number types and operator precedence.}
+
+\section{Core Ideas}
+
+\paragraph{Number sets} Natural numbers ($1, 2, 3, \ldots$), integers ($\ldots, -2, -1, 0, 1, \ldots$), rationals (any fraction $p/q$ with integer $p$ and nonzero integer $q$), irrationals (cannot be written as a fraction: $\sqrt{2}$, $\pi$), and reals (rationals and irrationals together). A decimal that ends or repeats is rational; one that does neither is irrational. In code: integers are exact, floats are a finite approximation of reals with about 16 significant digits.
+
+\paragraph{Order of operations} Parentheses, then exponents, then multiplication and division left to right, then addition and subtraction left to right. A tower of exponents is read from the top down: $2^{3^2}$ means $2^9 = 512$, not $(2^3)^2 = 64$. A negative sign without parentheses is applied after the exponent, so $-3^2 = -9$ while $(-3)^2 = 9$. Programming languages follow the same precedence; \lstinline!**! in Python is also right-associative.
+
+\paragraph{Absolute value} $|x|$ is the distance from $x$ to $0$, so $|x| = x$ when $x$ is zero or positive and $|x| = -x$ when $x$ is negative. The distance between two numbers $a$ and $b$ is $|a - b|$.
+
+\paragraph{Exponents and roots} $a^n$ is $n$ copies of $a$ multiplied together. $a^0 = 1$ for any nonzero $a$, and $a^{-n} = 1/a^n$. The square root of $a$ is the nonnegative number whose square is $a$.
+
+\paragraph{Quotient and remainder} Dividing $a$ by $b$ gives a quotient $q$ and remainder $r$ with $a = bq + r$ and $0 \le r < b$. In Python, \lstinline!17 // 5! is 3 and \lstinline!17 % 5! is 2. Languages disagree on negative inputs: Python's \lstinline!-7 % 3! is 2 (floor division), JavaScript's is $-1$ (truncation).
+
+\paragraph{Floating point} $0.1$ and $0.2$ have no exact binary representation, so \lstinline!0.1 + 0.2 == 0.3! is false. Compare floats with a tolerance or use exact fractions.
+
+\section{Worked Examples}
+
+\begin{example}
+Evaluate $3 + 4 \times 2^2 - (6 - 1)$.
+\solution Exponent first: $2^2 = 4$. Then $4 \times 4 = 16$. Parentheses: $6 - 1 = 5$. Then $3 + 16 - 5 = 14$.
+\end{example}
+
+\begin{example}
+Simplify $|{-7}| - |3 - 10|$.
+\solution $|{-7}| = 7$ and $|3 - 10| = |{-7}| = 7$, so the result is $0$.
+\end{example}
+
+\begin{example}
+Write $0.375$ as a fraction.
+\solution $0.375 = 375/1000$. The greatest common factor of $375$ and $1000$ is $125$, so $375/1000 = 3/8$.
+\end{example}
+
+\section{Exercises}
+
+\begin{multicols}{2}
+\begin{exercises}
+\item Evaluate $18 - 2 \times 3^2 + 4 \div 2$.
+\item Evaluate $(-3)^2$ and $-3^2$, and explain the difference in one sentence.
+\item Evaluate $|4 - 9| + |{-2}| \times 3$.
+\item Order from least to greatest: $-\tfrac{3}{4}$, $-0.8$, $-\tfrac{2}{3}$, $-0.7$.
+\item Write $0.125$, $2.6$ and $0.\overline{3}$ as fractions in lowest terms.
+\item Evaluate $2^{3^2}$ and $(2^3)^2$.
+\item Find the quotient $q$ and remainder $r$ with $47 = 6q + r$ and $0 \le r < 6$.
+\item Classify each as rational or irrational: $\sqrt{49}$, $\sqrt{50}$, $0.1010010001\ldots$, $22/7$.
+\item Evaluate $5^0 + 2^{-2} + \sqrt{81}$.
+\item A thermometer reads $-12$ degrees at dawn and $9$ degrees at noon. What is the change in temperature, and what is the distance between the two readings?
+\end{exercises}
+\end{multicols}
+
+\section{Programming Exercises}
+
+\begin{codeexercises}
+\item Show in Python that \lstinline!0.1 + 0.2 == 0.3! is false. Then make the comparison true two ways: with \lstinline!math.isclose!, and with \lstinline!fractions.Fraction!. Write one sentence on why the float version fails.
+\item Write \lstinline!floor_divmod(a, b)! that returns the quotient and remainder with $0 \le r < |b|$ for any integers $a$ and nonzero $b$, without using \lstinline!//!, \lstinline!%! or \lstinline!divmod!. Test it against \lstinline!divmod! for every $a$ from $-10$ to $10$ and $b$ in $\{3, -3\}$. Note which cases would differ in JavaScript.
+\item Write \lstinline!abs_value(x)! without calling \lstinline!abs!, and \lstinline!distance(a, b)! for two numbers on a number line. Assert that \lstinline!distance(-12, 9)! matches your answer to Exercise~1.10.
+\item Write \lstinline!gcd(a, b)! using the Euclidean algorithm, then \lstinline!to_fraction(s)! that turns a terminating decimal string such as \lstinline!"0.375"! into a reduced fraction as a tuple of integers. Check it against \lstinline!fractions.Fraction! for the values in Exercise~1.5.
+\end{codeexercises}
