@@ -19,6 +19,7 @@ template, the style rules and the next steps.
 
 - Never use em dashes (the long dash) anywhere, in prose or in LaTeX source. Use commas,
   colons, semicolons or a new sentence. (Owner's writing style; this is non-negotiable.)
+  Run `./check-dashes.sh` before every commit.
 - Every math expression goes in math mode. Exponents are `x^2`, never Unicode superscripts.
 - Inline code uses `\lstinline!...!`, except inside `tabularx` cells, where it must be
   `\texttt{...}` with `^`, `_`, `{`, `}` escaped (verbatim breaks inside table cells).

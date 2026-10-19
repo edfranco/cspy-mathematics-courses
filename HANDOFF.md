@@ -50,6 +50,7 @@ cs-math-curriculum/
   CLAUDE.md               short instructions Claude Code reads automatically
   HANDOFF.md              this file
   build.sh                builds one or all courses, copies PDFs to pdf/
+  check-dashes.sh         fails if an em dash or LaTeX --- appears anywhere
   curriculum/curriculum.md course map and topic tables (source for chapter lists)
   course-01-algebra-1/    main.tex ch01..ch11.tex exit.tex answers.tex
   course-02-geometry/     same layout
@@ -126,9 +127,8 @@ vector), `\abs{x}`, `\degs` (degree sign, use as `90\degs`), `\proj`.
 ## 5. Writing and style rules
 
 - **No em dashes, ever.** Not in prose, captions, comments or code strings. The owner's style
-  does not use them. Use a comma, colon, semicolon or two sentences. Check with
-  `grep -rn $'\xe2\x80\x94' course-*/ ; grep -rn -- '---' course-*/` before committing (there should be no hits; `--` en dashes
-  are also avoided in favor of "to", as in "pages 3 to 7").
+  does not use them. Use a comma, colon, semicolon or two sentences. Run `./check-dashes.sh` before committing; it must print "no em dashes". The `--` en dash is
+  also avoided in favor of "to", as in "pages 3 to 7".
 - Lead sentences carry the point. Short sentences, under about 25 words. No filler, no "note
   that", no "it is important to".
 - Every variable, number in a formula, and expression is in math mode: `$3x^2 - 5x + 7$`.
